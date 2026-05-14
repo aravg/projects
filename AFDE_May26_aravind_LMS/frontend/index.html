@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Library Management System</title>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/axios@1.6.0/dist/axios.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #333; }
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+
+.navbar {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  padding: 0 2rem; display: flex; align-items: center;
+  justify-content: space-between; height: 64px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100;
+}
+.nav-brand { color: white; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+.nav-links { display: flex; gap: 0.2rem; }
+.nav-links a {
+  color: rgba(255,255,255,0.8); text-decoration: none;
+  padding: 0.45rem 0.85rem; border-radius: 6px;
+  transition: all 0.18s; font-size: 0.87rem; font-weight: 500; cursor: pointer;
+}
+.nav-links a:hover { background: rgba(255,255,255,0.12); color: white; }
+.nav-links a.active { background: #e94560; color: white; }
+
+.main-content { flex: 1; padding: 2rem; max-width: 1400px; margin: 0 auto; width: 100%; }
+.page-header { margin-bottom: 1.75rem; }
+.page-header h1 { font-size: 1.7rem; color: #1a1a2e; font-weight: 700; }
+.page-header p { color: #666; margin-top: 0.2rem; font-size: 0.93rem; }
+
+.card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.card-title { font-size: 1.05rem; font-weight: 600; color: #1a1a2e; margin-bottom: 1.2rem; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 1.2rem; margin-bottom: 1.75rem; }
+.stat-card { background: white; border-radius: 12px; padding: 1.35rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 1rem; }
+.stat-icon { width: 52px; height: 52px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 1.45rem; flex-shrink: 0; }
+.stat-icon.blue { background: #e3f2fd; }
+.stat-icon.green { background: #e8f5e9; }
+.stat-icon.orange { background: #fff3e0; }
+.stat-icon.purple { background: #f3e5f5; }
+.stat-info h3 { font-size: 1.9rem; font-weight: 700; color: #1a1a2e; line-height: 1; }
+.stat-info p { color: #777; font-size: 0.8rem; margin-top: 0.2rem; }
+
+.btn { padding: 0.52rem 1rem; border: none; border-radius: 7px; cursor: pointer; font-size: 0.87rem; font-weight: 500; transition: all 0.18s; display: inline-flex; align-items: center; gap: 0.35rem; }
+.btn-primary { background: #0f3460; color: white; }
+.btn-primary:hover { background: #1a4a8a; transform: translateY(-1px); }
+.btn-danger { background: #e94560; color: white; }
+.btn-danger:hover { background: #c73652; }
+.btn-success { background: #2e7d32; color: white; }
+.btn-success:hover { background: #388e3c; }
+.btn-warning { background: #e65100; color: white; }
+.btn-warning:hover { background: #bf360c; }
+.btn-secondary { background: #546e7a; color: white; }
+.btn-secondary:hover { background: #455a64; }
+
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.75rem; }
+.table-container { overflow-x: auto; border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.91rem; }
+th, td { padding: 0.78rem 1rem; text-align: left; border-bottom: 1px solid #eeeeee; }
+th { background: #f5f7fa; font-weight: 600; color: #555; font-size: 0.79rem; text-transform: uppercase; letter-spacing: 0.04em; }
+tr:hover { background: #fafbfc; }
+td:last-child { white-space: nowrap; }
+
+.badge { padding: 0.27rem 0.68rem; border-radius: 20px; font-size: 0.77rem; font-weight: 600; display: inline-block; }
+.badge-available { background: #e8f5e9; color: #2e7d32; }
+.badge-borrowed  { background: #fff3e0; color: #e65100; }
+.badge-returned  { background: #e8f5e9; color: #2e7d32; }
+.badge-active    { background: #fff3e0; color: #e65100; }
+
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 1rem; }
+.modal { background: white; border-radius: 16px; padding: 2rem; width: 100%; max-width: 455px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.modal h2 { margin-bottom: 1.35rem; color: #1a1a2e; font-size: 1.18rem; }
+
+.form-group { margin-bottom: 0.9rem; }
+.form-group label { display: block; margin-bottom: 0.33rem; font-weight: 500; color: #444; font-size: 0.87rem; }
+.form-group input, .form-group select {
+  width: 100%; padding: 0.58rem 0.82rem; border: 1.5px solid #e0e0e0;
+  border-radius: 8px; font-size: 0.91rem; transition: border-color 0.2s; outline: none; font-family: inherit;
+}
+.form-group input:focus, .form-group select:focus { border-color: #0f3460; }
+.form-actions { display: flex; gap: 0.7rem; justify-content: flex-end; margin-top: 1.35rem; }
+
+.search-input { padding: 0.58rem 0.95rem; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 0.91rem; outline: none; width: 255px; transition: border-color 0.2s; font-family: inherit; }
+.search-input:focus { border-color: #0f3460; }
+
+.alert { padding: 0.72rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.88rem; display: flex; align-items: center; gap: 0.5rem; }
+.alert-error   { background: #ffebee; color: #c62828; }
+.alert-success { background: #e8f5e9; color: #2e7d32; }
+.alert-close { margin-left: auto; cursor: pointer; font-size: 1.1rem; opacity: 0.7; }
+.alert-close:hover { opacity: 1; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.75rem; }
+
+.empty-state { text-align: center; padding: 2.5rem; color: #bbb; }
+.empty-icon { font-size: 2.2rem; margin-bottom: 0.5rem; }
+.empty-state p { font-size: 0.93rem; }
+
+.search-filters { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.search-actions { display: flex; gap: 0.7rem; }
+.results-count { font-size: 0.88rem; color: #666; margin-bottom: 1rem; }
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 1rem; }
+  .nav-brand span:last-child { display: none; }
+  .nav-links a { padding: 0.38rem 0.52rem; font-size: 0.78rem; }
+  .main-content { padding: 1rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .two-col { grid-template-columns: 1fr; }
+  .search-filters { grid-template-columns: 1fr; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .search-input { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div id="root"><div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#999;font-size:1rem">Loading Library Management System...</div></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+/* ── API (relative URLs — served from same FastAPI origin) ──────────── */
+const booksAPI = {
+  getAll:  ()      => axios.get('/books/'),
+  create:  d       => axios.post('/books/', d),
+  update:  (id, d) => axios.put(`/books/${id}`, d),
+  delete:  id      => axios.delete(`/books/${id}`),
+};
+const borrowersAPI = {
+  getAll:  ()      => axios.get('/borrowers/'),
+  create:  d       => axios.post('/borrowers/', d),
+  update:  (id, d) => axios.put(`/borrowers/${id}`, d),
+  delete:  id      => axios.delete(`/borrowers/${id}`),
+};
+const transactionsAPI = {
+  getAll: ()  => axios.get('/transactions'),
+  borrow: d   => axios.post('/borrow', d),
+  return: d   => axios.post('/return', d),
+};
+const dashboardAPI = { getStats: () => axios.get('/dashboard') };
+const searchAPI    = { search: p => axios.get('/search', { params: p }) };
+
+/* ── Hash router ─────────────────────────────────────────────────────── */
+function useHash() {
+  const [hash, setHash] = useState(window.location.hash || '#dashboard');
+  useEffect(() => {
+    const h = () => setHash(window.location.hash || '#dashboard');
+    window.addEventListener('hashchange', h);
+    return () => window.removeEventListener('hashchange', h);
+  }, []);
+  return hash;
+}
+
+/* ── Shared components ───────────────────────────────────────────────── */
+function Alert({ type, msg, onClose }) {
+  if (!msg) return null;
+  return (
+    <div className={`alert alert-${type}`}>
+      <span>{type === 'error' ? '✗' : '✓'}</span>
+      <span style={{ flex: 1 }}>{msg}</span>
+      {onClose && <span className="alert-close" onClick={onClose}>×</span>}
+    </div>
+  );
+}
+
+function Modal({ title, onClose, children }) {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" onClick={e => e.stopPropagation()}>
+        <h2>{title}</h2>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ── Dashboard ───────────────────────────────────────────────────────── */
+function Dashboard() {
+  const [stats, setStats] = useState(null);
+  const [err,   setErr]   = useState('');
+
+  useEffect(() => {
+    dashboardAPI.getStats()
+      .then(r => setStats(r.data))
+      .catch(() => setErr('Cannot connect to backend. Make sure uvicorn is running on port 8000.'));
+  }, []);
+
+  return (
+    <div>
+      <div className="page-header">
+        <h1>Dashboard</h1>
+        <p>Library overview and recent activity</p>
+      </div>
+      <Alert type="error" msg={err} />
+      {stats && <>
+        <div className="stats-grid">
+          <div className="stat-card"><div className="stat-icon blue">📚</div><div className="stat-info"><h3>{stats.total_books}</h3><p>Total Books</p></div></div>
+          <div className="stat-card"><div className="stat-icon green">✅</div><div className="stat-info"><h3>{stats.available_books}</h3><p>Available</p></div></div>
+          <div className="stat-card"><div className="stat-icon orange">📖</div><div className="stat-info"><h3>{stats.borrowed_books}</h3><p>Borrowed</p></div></div>
+          <div className="stat-card"><div className="stat-icon purple">👥</div><div className="stat-info"><h3>{stats.total_borrowers}</h3><p>Borrowers</p></div></div>
+        </div>
+        <div className="card">
+          <div className="card-title">Recent Transactions</div>
+          {stats.recent_transactions.length === 0
+            ? <div className="empty-state"><div className="empty-icon">📋</div><p>No transactions yet</p></div>
+            : <div className="table-container">
+                <table>
+                  <thead><tr><th>#</th><th>Book</th><th>Borrower</th><th>Date</th><th>Status</th></tr></thead>
+                  <tbody>
+                    {stats.recent_transactions.map(tx => (
+                      <tr key={tx.transaction_id}>
+                        <td>#{tx.transaction_id}</td>
+                        <td><strong>{tx.book?.title}</strong></td>
+                        <td>{tx.borrower?.borrower_name}</td>
+                        <td>{new Date(tx.borrow_date).toLocaleDateString()}</td>
+                        <td><span className={`badge badge-${tx.return_date ? 'returned' : 'active'}`}>{tx.return_date ? 'Returned' : 'Active'}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+          }
+        </div>
+      </>}
+    </div>
+  );
+}
+
+/* ── Books ───────────────────────────────────────────────────────────── */
+const BOOK0 = { title: '', author: '', category: '', isbn: '', availability_status: 'available' };
+
+function Books() {
+  const [books,    setBooks]    = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [modal,    setModal]    = useState(false);
+  const [editing,  setEditing]  = useState(null);
+  const [form,     setForm]     = useState(BOOK0);
+  const [q,        setQ]        = useState('');
+  const [err,      setErr]      = useState('');
+  const [ok,       setOk]       = useState('');
+
+  const load = () => booksAPI.getAll().then(r => { setBooks(r.data); setFiltered(r.data); }).catch(() => setErr('Failed to load books'));
+  useEffect(() => { load(); }, []);
+
+  useEffect(() => {
+    const lq = q.toLowerCase();
+    setFiltered(lq ? books.filter(b =>
+      [b.title, b.author, b.category, b.isbn].some(v => v.toLowerCase().includes(lq))
+    ) : books);
+  }, [q, books]);
+
+  const openAdd  = () => { setForm(BOOK0); setEditing(null); setModal(true); setErr(''); };
+  const openEdit = b  => { setForm({...b}); setEditing(b); setModal(true); setErr(''); };
+  const close    = () => { setModal(false); setErr(''); };
+  const flash    = m  => { setOk(m); setTimeout(() => setOk(''), 3500); };
+
+  const validate = () => {
+    if (!form.title.trim())    return 'Title is required';
+    if (!form.author.trim())   return 'Author is required';
+    if (!form.category.trim()) return 'Category is required';
+    if (!form.isbn.trim())     return 'ISBN is required';
+    return '';
+  };
+
+  const submit = async e => {
+    e.preventDefault();
+    const v = validate(); if (v) { setErr(v); return; }
+    try {
+      if (editing) { await booksAPI.update(editing.book_id, form); flash('Book updated!'); }
+      else         { await booksAPI.create(form); flash('Book added!'); }
+      load(); close();
+    } catch (ex) { setErr(ex.response?.data?.detail || 'Operation failed'); }
+  };
+
+  const del = async id => {
+    if (!window.confirm('Delete this book?')) return;
+    try { await booksAPI.delete(id); flash('Book deleted!'); load(); }
+    catch { setErr('Delete failed — book may have active transactions'); }
+  };
+
+  const set = (k, v) => setForm(p => ({...p, [k]: v}));
+
+  return (
+    <div>
+      <div className="page-header"><h1>Book Management</h1><p>Add, edit, and manage your book collection</p></div>
+      <Alert type="success" msg={ok} />
+      <Alert type="error" msg={!modal && err ? err : ''} onClose={() => setErr('')} />
+      <div className="card">
+        <div className="toolbar">
+          <input className="search-input" placeholder="Search by title, author, category, ISBN..." value={q} onChange={e => setQ(e.target.value)} />
+          <button className="btn btn-primary" onClick={openAdd}>+ Add Book</button>
+        </div>
+        <div className="table-container">
+          <table>
+            <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>ISBN</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              {filtered.length === 0
+                ? <tr><td colSpan={7}><div className="empty-state"><div className="empty-icon">📚</div><p>No books found</p></div></td></tr>
+                : filtered.map(b => (
+                  <tr key={b.book_id}>
+                    <td style={{ color: '#888' }}>{b.book_id}</td>
+                    <td><strong>{b.title}</strong></td>
+                    <td>{b.author}</td>
+                    <td>{b.category}</td>
+                    <td style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#555' }}>{b.isbn}</td>
+                    <td><span className={`badge badge-${b.availability_status}`}>{b.availability_status}</span></td>
+                    <td>
+                      <button className="btn btn-warning" style={{ marginRight: '0.4rem', padding: '0.38rem 0.75rem' }} onClick={() => openEdit(b)}>Edit</button>
+                      <button className="btn btn-danger" style={{ padding: '0.38rem 0.75rem' }} onClick={() => del(b.book_id)}>Delete</button>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {modal && (
+        <Modal title={editing ? 'Edit Book' : 'Add New Book'} onClose={close}>
+          <Alert type="error" msg={err} />
+          <form onSubmit={submit}>
+            <div className="form-group"><label>Title *</label><input value={form.title}    onChange={e => set('title', e.target.value)}    placeholder="Book title" /></div>
+            <div className="form-group"><label>Author *</label><input value={form.author}  onChange={e => set('author', e.target.value)}  placeholder="Author name" /></div>
+            <div className="form-group"><label>Category *</label><input value={form.category} onChange={e => set('category', e.target.value)} placeholder="e.g. Technology, Fiction" /></div>
+            <div className="form-group"><label>ISBN *</label><input value={form.isbn}      onChange={e => set('isbn', e.target.value)}    placeholder="ISBN number" /></div>
+            <div className="form-group">
+              <label>Availability Status</label>
+              <select value={form.availability_status} onChange={e => set('availability_status', e.target.value)}>
+                <option value="available">Available</option>
+                <option value="borrowed">Borrowed</option>
+              </select>
+            </div>
+            <div className="form-actions">
+              <button type="button" className="btn btn-secondary" onClick={close}>Cancel</button>
+              <button type="submit" className="btn btn-primary">{editing ? 'Update Book' : 'Add Book'}</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </div>
+  );
+}
+
+/* ── Borrowers ───────────────────────────────────────────────────────── */
+const BRW0 = { borrower_name: '', email: '', phone: '' };
+
+function Borrowers() {
+  const [list,     setList]     = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [modal,    setModal]    = useState(false);
+  const [editing,  setEditing]  = useState(null);
+  const [form,     setForm]     = useState(BRW0);
+  const [q,        setQ]        = useState('');
+  const [err,      setErr]      = useState('');
+  const [ok,       setOk]       = useState('');
+
+  const load = () => borrowersAPI.getAll().then(r => { setList(r.data); setFiltered(r.data); }).catch(() => setErr('Failed to load borrowers'));
+  useEffect(() => { load(); }, []);
+
+  useEffect(() => {
+    const lq = q.toLowerCase();
+    setFiltered(lq ? list.filter(b =>
+      [b.borrower_name, b.email, b.phone].some(v => v.toLowerCase().includes(lq))
+    ) : list);
+  }, [q, list]);
+
+  const openAdd  = () => { setForm(BRW0); setEditing(null); setModal(true); setErr(''); };
+  const openEdit = b  => { setForm({...b}); setEditing(b); setModal(true); setErr(''); };
+  const close    = () => { setModal(false); setErr(''); };
+  const flash    = m  => { setOk(m); setTimeout(() => setOk(''), 3500); };
+
+  const validate = () => {
+    if (!form.borrower_name.trim()) return 'Name is required';
+    if (!form.email.includes('@'))  return 'Valid email is required';
+    if (!form.phone.trim())         return 'Phone is required';
+    return '';
+  };
+
+  const submit = async e => {
+    e.preventDefault();
+    const v = validate(); if (v) { setErr(v); return; }
+    try {
+      if (editing) { await borrowersAPI.update(editing.borrower_id, form); flash('Borrower updated!'); }
+      else         { await borrowersAPI.create(form); flash('Borrower added!'); }
+      load(); close();
+    } catch (ex) { setErr(ex.response?.data?.detail || 'Operation failed'); }
+  };
+
+  const del = async id => {
+    if (!window.confirm('Delete this borrower?')) return;
+    try { await borrowersAPI.delete(id); flash('Borrower deleted!'); load(); }
+    catch { setErr('Delete failed'); }
+  };
+
+  const set = (k, v) => setForm(p => ({...p, [k]: v}));
+
+  return (
+    <div>
+      <div className="page-header"><h1>Borrower Management</h1><p>Manage library members and borrowers</p></div>
+      <Alert type="success" msg={ok} />
+      <Alert type="error" msg={!modal && err ? err : ''} onClose={() => setErr('')} />
+      <div className="card">
+        <div className="toolbar">
+          <input className="search-input" placeholder="Search by name, email, phone..." value={q} onChange={e => setQ(e.target.value)} />
+          <button className="btn btn-primary" onClick={openAdd}>+ Add Borrower</button>
+        </div>
+        <div className="table-container">
+          <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead>
+            <tbody>
+              {filtered.length === 0
+                ? <tr><td colSpan={5}><div className="empty-state"><div className="empty-icon">👥</div><p>No borrowers found</p></div></td></tr>
+                : filtered.map(b => (
+                  <tr key={b.borrower_id}>
+                    <td style={{ color: '#888' }}>{b.borrower_id}</td>
+                    <td><strong>{b.borrower_name}</strong></td>
+                    <td>{b.email}</td>
+                    <td>{b.phone}</td>
+                    <td>
+                      <button className="btn btn-warning" style={{ marginRight: '0.4rem', padding: '0.38rem 0.75rem' }} onClick={() => openEdit(b)}>Edit</button>
+                      <button className="btn btn-danger" style={{ padding: '0.38rem 0.75rem' }} onClick={() => del(b.borrower_id)}>Delete</button>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {modal && (
+        <Modal title={editing ? 'Edit Borrower' : 'Add New Borrower'} onClose={close}>
+          <Alert type="error" msg={err} />
+          <form onSubmit={submit}>
+            <div className="form-group"><label>Full Name *</label><input value={form.borrower_name} onChange={e => set('borrower_name', e.target.value)} placeholder="Full name" /></div>
+            <div className="form-group"><label>Email Address *</label><input type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="email@example.com" /></div>
+            <div className="form-group"><label>Phone Number *</label><input value={form.phone} onChange={e => set('phone', e.target.value)} placeholder="Contact number" /></div>
+            <div className="form-actions">
+              <button type="button" className="btn btn-secondary" onClick={close}>Cancel</button>
+              <button type="submit" className="btn btn-primary">{editing ? 'Update' : 'Add Borrower'}</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </div>
+  );
+}
+
+/* ── Borrow / Return ─────────────────────────────────────────────────── */
+function BorrowReturn() {
+  const [books,    setBooks]    = useState([]);
+  const [borrowers,setBorrowers]= useState([]);
+  const [txns,     setTxns]     = useState([]);
+  const [bf,       setBf]       = useState({ book_id: '', borrower_id: '' });
+  const [rf,       setRf]       = useState({ transaction_id: '' });
+  const [err,      setErr]      = useState('');
+  const [ok,       setOk]       = useState('');
+
+  const load = () => Promise.all([booksAPI.getAll(), borrowersAPI.getAll(), transactionsAPI.getAll()])
+    .then(([b, br, tx]) => { setBooks(b.data); setBorrowers(br.data); setTxns(tx.data); })
+    .catch(() => setErr('Failed to load data'));
+
+  useEffect(() => { load(); }, []);
+
+  const flash = m => { setOk(m); setTimeout(() => setOk(''), 4000); };
+  const avail = books.filter(b => b.availability_status === 'available');
+  const active = txns.filter(tx => !tx.return_date);
+
+  const borrow = async e => {
+    e.preventDefault(); setErr('');
+    if (!bf.book_id || !bf.borrower_id) { setErr('Please select both a book and a borrower'); return; }
+    try {
+      await transactionsAPI.borrow({ book_id: +bf.book_id, borrower_id: +bf.borrower_id });
+      flash('Book borrowed successfully!'); setBf({ book_id: '', borrower_id: '' }); load();
+    } catch (ex) { setErr(ex.response?.data?.detail || 'Borrow failed'); }
+  };
+
+  const ret = async e => {
+    e.preventDefault(); setErr('');
+    if (!rf.transaction_id) { setErr('Please select a transaction'); return; }
+    try {
+      await transactionsAPI.return({ transaction_id: +rf.transaction_id });
+      flash('Book returned successfully!'); setRf({ transaction_id: '' }); load();
+    } catch (ex) { setErr(ex.response?.data?.detail || 'Return failed'); }
+  };
+
+  return (
+    <div>
+      <div className="page-header"><h1>Borrow / Return</h1><p>Manage book borrowing and return operations</p></div>
+      <Alert type="success" msg={ok} onClose={() => setOk('')} />
+      <Alert type="error"   msg={err} onClose={() => setErr('')} />
+
+      <div className="two-col">
+        <div className="card">
+          <div className="card-title">📤 Borrow a Book</div>
+          <form onSubmit={borrow}>
+            <div className="form-group">
+              <label>Available Books <span style={{ color: '#2e7d32', fontSize: '0.79rem' }}>({avail.length} available)</span></label>
+              <select value={bf.book_id} onChange={e => setBf(p => ({...p, book_id: e.target.value}))}>
+                <option value="">-- Select a book --</option>
+                {avail.map(b => <option key={b.book_id} value={b.book_id}>{b.title} — {b.author}</option>)}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Borrower</label>
+              <select value={bf.borrower_id} onChange={e => setBf(p => ({...p, borrower_id: e.target.value}))}>
+                <option value="">-- Select a borrower --</option>
+                {borrowers.map(b => <option key={b.borrower_id} value={b.borrower_id}>{b.borrower_name} ({b.email})</option>)}
+              </select>
+            </div>
+            <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Borrow Book</button>
+          </form>
+        </div>
+
+        <div className="card">
+          <div className="card-title">📥 Return a Book</div>
+          <form onSubmit={ret}>
+            <div className="form-group">
+              <label>Active Transactions <span style={{ color: '#e65100', fontSize: '0.79rem' }}>({active.length} active)</span></label>
+              <select value={rf.transaction_id} onChange={e => setRf({ transaction_id: e.target.value })}>
+                <option value="">-- Select a transaction --</option>
+                {active.map(tx => (
+                  <option key={tx.transaction_id} value={tx.transaction_id}>
+                    #{tx.transaction_id} · {tx.book?.title} → {tx.borrower?.borrower_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div style={{ marginTop: '1.1rem' }}>
+              <button type="submit" className="btn btn-success" style={{ width: '100%', justifyContent: 'center' }}>Return Book</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="card-title">All Transactions</div>
+        <div className="table-container">
+          <table>
+            <thead><tr><th>#</th><th>Book</th><th>Borrower</th><th>Borrowed</th><th>Returned</th><th>Status</th></tr></thead>
+            <tbody>
+              {txns.length === 0
+                ? <tr><td colSpan={6}><div className="empty-state"><div className="empty-icon">📋</div><p>No transactions yet</p></div></td></tr>
+                : txns.slice().reverse().map(tx => (
+                  <tr key={tx.transaction_id}>
+                    <td style={{ color: '#888' }}>#{tx.transaction_id}</td>
+                    <td><strong>{tx.book?.title}</strong></td>
+                    <td>{tx.borrower?.borrower_name}</td>
+                    <td>{new Date(tx.borrow_date).toLocaleDateString()}</td>
+                    <td>{tx.return_date ? new Date(tx.return_date).toLocaleDateString() : '—'}</td>
+                    <td><span className={`badge badge-${tx.return_date ? 'returned' : 'active'}`}>{tx.return_date ? 'Returned' : 'Active'}</span></td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Search ──────────────────────────────────────────────────────────── */
+function Search() {
+  const [q,        setQ]        = useState('');
+  const [category, setCategory] = useState('');
+  const [author,   setAuthor]   = useState('');
+  const [results,  setResults]  = useState([]);
+  const [searched, setSearched] = useState(false);
+  const [loading,  setLoading]  = useState(false);
+  const [err,      setErr]      = useState('');
+
+  const doSearch = async e => {
+    e.preventDefault(); setLoading(true); setErr('');
+    try { const r = await searchAPI.search({ q, category, author }); setResults(r.data); setSearched(true); }
+    catch { setErr('Search failed'); }
+    finally { setLoading(false); }
+  };
+
+  const clear = () => { setQ(''); setCategory(''); setAuthor(''); setResults([]); setSearched(false); };
+
+  return (
+    <div>
+      <div className="page-header"><h1>Search Books</h1><p>Find books by title, author, category, or keyword</p></div>
+      <div className="card" style={{ marginBottom: '1.5rem' }}>
+        <form onSubmit={doSearch}>
+          <div className="search-filters">
+            <div className="form-group" style={{ margin: 0 }}>
+              <label>Keyword</label>
+              <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search title, ISBN..." />
+            </div>
+            <div className="form-group" style={{ margin: 0 }}>
+              <label>Category</label>
+              <input value={category} onChange={e => setCategory(e.target.value)} placeholder="e.g. Fiction, Technology..." />
+            </div>
+            <div className="form-group" style={{ margin: 0 }}>
+              <label>Author</label>
+              <input value={author} onChange={e => setAuthor(e.target.value)} placeholder="Filter by author..." />
+            </div>
+          </div>
+          <div className="search-actions" style={{ marginTop: '0.75rem' }}>
+            <button type="submit" className="btn btn-primary">🔍 Search</button>
+            <button type="button" className="btn btn-secondary" onClick={clear}>Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <Alert type="error" msg={err} />
+      {loading && <div className="empty-state"><p>Searching...</p></div>}
+
+      {searched && !loading && (
+        <div className="card">
+          <div className="results-count">Found <strong>{results.length}</strong> {results.length === 1 ? 'book' : 'books'}</div>
+          <div className="table-container">
+            <table>
+              <thead><tr><th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>ISBN</th><th>Status</th></tr></thead>
+              <tbody>
+                {results.length === 0
+                  ? <tr><td colSpan={6}><div className="empty-state"><div className="empty-icon">🔍</div><p>No books match your search</p></div></td></tr>
+                  : results.map(b => (
+                    <tr key={b.book_id}>
+                      <td style={{ color: '#888' }}>{b.book_id}</td>
+                      <td><strong>{b.title}</strong></td>
+                      <td>{b.author}</td>
+                      <td>{b.category}</td>
+                      <td style={{ fontFamily: 'monospace', fontSize: '0.82rem', color: '#555' }}>{b.isbn}</td>
+                      <td><span className={`badge badge-${b.availability_status}`}>{b.availability_status}</span></td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── App ─────────────────────────────────────────────────────────────── */
+const NAV = [
+  { hash: '#dashboard',     label: 'Dashboard' },
+  { hash: '#books',         label: 'Books' },
+  { hash: '#borrowers',     label: 'Borrowers' },
+  { hash: '#borrow-return', label: 'Borrow/Return' },
+  { hash: '#search',        label: 'Search' },
+];
+
+const PAGE_MAP = {
+  '#dashboard':     <Dashboard />,
+  '#books':         <Books />,
+  '#borrowers':     <Borrowers />,
+  '#borrow-return': <BorrowReturn />,
+  '#search':        <Search />,
+};
+
+function App() {
+  const hash = useHash();
+  return (
+    <div className="app">
+      <nav className="navbar">
+        <div className="nav-brand">
+          <span>📚</span>
+          <span>Library Management System</span>
+        </div>
+        <div className="nav-links">
+          {NAV.map(({ hash: h, label }) => (
+            <a key={h} href={h} className={hash === h ? 'active' : ''}>{label}</a>
+          ))}
+        </div>
+      </nav>
+      <main className="main-content">
+        {PAGE_MAP[hash] || <Dashboard />}
+      </main>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
