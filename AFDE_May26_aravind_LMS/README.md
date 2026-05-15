@@ -121,17 +121,13 @@ AFDE_May26_aravind_LMS/
 4. App will be available at: `http://localhost:5173`
 
 **Dashboard screenshot:**
-
 <img width="1864" height="861" alt="image (3)" src="https://github.com/user-attachments/assets/fa6443ff-cb10-4575-9750-315977dc74bc" />
 **Book collections screenshot:**
-
 <img width="1865" height="861" alt="image (4)" src="https://github.com/user-attachments/assets/c1f53e69-ab7a-4fda-9575-9eb6d2ad3164" />
 **Borrow/return management:**
-
 <img width="1826" height="868" alt="image (6)" src="https://github.com/user-attachments/assets/6a198e73-c1f1-46db-8215-3d2c5c929915" />
 <img width="1873" height="689" alt="image (5)" src="https://github.com/user-attachments/assets/d3320dae-a86d-4f33-b179-e2771f06eb2e" />
 **API testing:**
-
 <img width="1750" height="842" alt="image (7)" src="https://github.com/user-attachments/assets/5318e120-59ca-4a3c-97bb-8f87d0c48970" />
 
 ## API Endpoints
