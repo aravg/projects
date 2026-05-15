@@ -1,0 +1,1 @@
+This folder(/screenshots) contains essential snapshots required for the project.
