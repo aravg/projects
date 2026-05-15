@@ -168,6 +168,14 @@ print('Seeded!')
 ```
 
 ---
+**Dashboard screenshot**
+<img width="1914" height="845" alt="image" src="https://github.com/user-attachments/assets/c8a199d5-5fb0-4ba4-a9f6-bbf0f67282a1" />
+**Feedback screenshot**
+<img width="1859" height="860" alt="image (1)" src="https://github.com/user-attachments/assets/e2ed0a2d-29be-4886-b3f0-839280a04ed7" />
+**API Testing screenshot**
+<img width="1789" height="834" alt="image (2)" src="https://github.com/user-attachments/assets/2731eb7a-ac96-4b6f-8373-96524c7ef0c7" />
+
+
 
 ## GitHub Repository Naming
 
