@@ -36,4 +36,13 @@ export const searchAPI = {
   search: (params) => api.get('/search', { params }),
 };
 
+export const analyticsAPI = {
+  getStatus: () => api.get('/analytics/status'),
+  getMostBorrowed: (limit = 10) => api.get(`/analytics/most-borrowed?limit=${limit}`),
+  getCategoryBorrowing: () => api.get('/analytics/category-borrowing'),
+  getMonthlyTrends: () => api.get('/analytics/monthly-trends'),
+  getOverdue: () => api.get('/analytics/overdue'),
+  runETL: () => api.post('/analytics/run-etl'),
+};
+
 export default api;

@@ -6,11 +6,11 @@ from typing import List, Optional
 from pathlib import Path
 import models, schemas, crud
 from database import engine, get_db
-from routers import books, borrowers, transactions
+from routers import books, borrowers, transactions, analytics
 
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Library Management System API", version="1.0.0")
+app = FastAPI(title="Library Management System API", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -28,6 +28,7 @@ def serve_frontend():
 app.include_router(books.router)
 app.include_router(borrowers.router)
 app.include_router(transactions.router)
+app.include_router(analytics.router)
 
 @app.get("/")
 def root():

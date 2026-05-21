@@ -30,3 +30,42 @@ class Transaction(Base):
     return_date = Column(DateTime, nullable=True)
     book = relationship("Book", back_populates="transactions")
     borrower = relationship("Borrower", back_populates="transactions")
+
+
+class AnalyticsMostBorrowed(Base):
+    __tablename__ = "analytics_most_borrowed"
+    id = Column(Integer, primary_key=True, index=True)
+    book_title = Column(String, nullable=False)
+    author = Column(String)
+    category = Column(String)
+    isbn = Column(String)
+    borrow_count = Column(Integer, default=0)
+    etl_run_at = Column(DateTime)
+
+
+class AnalyticsCategoryBorrowing(Base):
+    __tablename__ = "analytics_category_borrowing"
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String, nullable=False)
+    borrow_count = Column(Integer, default=0)
+    etl_run_at = Column(DateTime)
+
+
+class AnalyticsMonthlyTrend(Base):
+    __tablename__ = "analytics_monthly_trends"
+    id = Column(Integer, primary_key=True, index=True)
+    year_month = Column(String, nullable=False)
+    borrow_count = Column(Integer, default=0)
+    etl_run_at = Column(DateTime)
+
+
+class AnalyticsOverdue(Base):
+    __tablename__ = "analytics_overdue"
+    id = Column(Integer, primary_key=True, index=True)
+    transaction_id = Column(Integer)
+    book_title = Column(String)
+    borrower_name = Column(String)
+    borrower_email = Column(String)
+    borrow_date = Column(String)
+    days_overdue = Column(Integer, default=0)
+    etl_run_at = Column(DateTime)

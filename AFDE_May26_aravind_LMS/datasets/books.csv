@@ -1,0 +1,51 @@
+book_id,title,author,category,isbn
+1,The Great Gatsby,F. Scott Fitzgerald,Fiction,978-0-7432-7356-5
+2,To Kill a Mockingbird,Harper Lee,Fiction,978-0-06-112008-4
+3,1984,George Orwell,Fiction,978-0-451-52493-5
+4,Pride and Prejudice,Jane Austen,Fiction,978-0-14-143951-8
+5,The Catcher in the Rye,J.D. Salinger,Fiction,978-0-316-76948-0
+6,Brave New World,Aldous Huxley,Fiction,978-0-06-085052-4
+7,The Alchemist,Paulo Coelho,Fiction,978-0-06-231500-7
+8,Animal Farm,George Orwell,Fiction,978-0-452-28424-1
+9,Lord of the Flies,William Golding,Fiction,978-0-571-19148-0
+10,The Road,Cormac McCarthy,Fiction,978-0-307-38789-9
+11,A Brief History of Time,Stephen Hawking,Science,978-0-553-38016-3
+12,The Selfish Gene,Richard Dawkins,Science,978-0-19-929114-4
+13,Cosmos,Carl Sagan,Science,978-0-345-33135-9
+14,The Double Helix,James Watson,Science,978-0-7432-1630-1
+15,Surely You're Joking Mr. Feynman,Richard Feynman,Science,978-0-393-31604-9
+16,The Gene,Siddhartha Mukherjee,Science,978-1-4767-3350-4
+17,The Origin of Species,Charles Darwin,Science,978-0-14-043205-3
+18,Astrophysics for People in a Hurry,Neil deGrasse Tyson,Science,978-0-393-60939-4
+19,The Elegant Universe,Brian Greene,Science,978-0-393-33810-5
+20,Pale Blue Dot,Carl Sagan,Science,978-0-345-37659-6
+21,Clean Code,Robert C. Martin,Technology,978-0-13-235088-4
+22,The Pragmatic Programmer,Andrew Hunt,Technology,978-0-13-595705-9
+23,Design Patterns,Gang of Four,Technology,978-0-20-163361-5
+24,The Mythical Man-Month,Frederick Brooks,Technology,978-0-20-183595-3
+25,Code Complete,Steve McConnell,Technology,978-0-73-560765-0
+26,The Art of Computer Programming,Donald Knuth,Technology,978-0-13-468599-1
+27,Introduction to Algorithms,Cormen et al.,Technology,978-0-26-204630-5
+28,Structure and Interpretation of Programs,Abelson and Sussman,Technology,978-0-26-251153-0
+29,The Phoenix Project,Gene Kim,Technology,978-1-94-278028-8
+30,Zero to One,Peter Thiel,Technology,978-0-80-413929-8
+31,Sapiens,Yuval Noah Harari,History,978-0-06-231609-7
+32,Guns Germs and Steel,Jared Diamond,History,978-0-39-331755-8
+33,The Art of War,Sun Tzu,History,978-1-59-030760-7
+34,The Prince,Machiavelli,History,978-0-14-044915-0
+35,A People's History of the United States,Howard Zinn,History,978-0-06-196346-9
+36,The Second World War,Winston Churchill,History,978-0-39-560696-6
+37,Caesar and Christ,Will Durant,History,978-1-56-731014-6
+38,The Rise and Fall of the Third Reich,William Shirer,History,978-0-67-172953-5
+39,The Story of Civilization,Will Durant,History,978-1-56-731016-0
+40,Longitude,Dava Sobel,History,978-0-80-271529-6
+41,Leonardo da Vinci,Walter Isaacson,Biography,978-1-50-115728-9
+42,Steve Jobs,Walter Isaacson,Biography,978-1-45-168995-7
+43,Elon Musk,Ashlee Vance,Biography,978-0-06-230123-9
+44,The Diary of a Young Girl,Anne Frank,Biography,978-0-55-329698-9
+45,Long Walk to Freedom,Nelson Mandela,Biography,978-0-31-620585-9
+46,The 7 Habits of Highly Effective People,Stephen Covey,Self-Help,978-0-74-326951-3
+47,How to Win Friends and Influence People,Dale Carnegie,Self-Help,978-0-67-142517-9
+48,Atomic Habits,James Clear,Self-Help,978-0-73-521429-4
+49,Meditations,Marcus Aurelius,Philosophy,978-0-14-044140-6
+50,Thus Spoke Zarathustra,Friedrich Nietzsche,Philosophy,978-0-14-044118-5

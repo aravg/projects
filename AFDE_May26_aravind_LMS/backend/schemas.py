@@ -59,3 +59,51 @@ class TransactionResponse(BaseModel):
     borrower: BorrowerResponse
     class Config:
         from_attributes = True
+
+
+class MostBorrowedResponse(BaseModel):
+    id: int
+    book_title: str
+    author: Optional[str] = None
+    category: Optional[str] = None
+    isbn: Optional[str] = None
+    borrow_count: int
+    class Config:
+        from_attributes = True
+
+
+class CategoryBorrowingResponse(BaseModel):
+    id: int
+    category: str
+    borrow_count: int
+    class Config:
+        from_attributes = True
+
+
+class MonthlyTrendResponse(BaseModel):
+    id: int
+    year_month: str
+    borrow_count: int
+    class Config:
+        from_attributes = True
+
+
+class OverdueResponse(BaseModel):
+    id: int
+    transaction_id: int
+    book_title: Optional[str] = None
+    borrower_name: Optional[str] = None
+    borrower_email: Optional[str] = None
+    borrow_date: Optional[str] = None
+    days_overdue: int
+    class Config:
+        from_attributes = True
+
+
+class ETLStatusResponse(BaseModel):
+    etl_run: bool
+    most_borrowed_count: int
+    category_count: int
+    monthly_trend_count: int
+    overdue_count: int
+    last_run_at: Optional[str] = None

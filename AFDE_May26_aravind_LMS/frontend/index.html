@@ -142,8 +142,16 @@ const transactionsAPI = {
   borrow: d   => axios.post('/borrow', d),
   return: d   => axios.post('/return', d),
 };
-const dashboardAPI = { getStats: () => axios.get('/dashboard') };
-const searchAPI    = { search: p => axios.get('/search', { params: p }) };
+const dashboardAPI   = { getStats: () => axios.get('/dashboard') };
+const searchAPI      = { search: p => axios.get('/search', { params: p }) };
+const analyticsAPI   = {
+  getStatus:          () => axios.get('/analytics/status'),
+  getMostBorrowed:    (limit=10) => axios.get(`/analytics/most-borrowed?limit=${limit}`),
+  getCategoryBorrowing: () => axios.get('/analytics/category-borrowing'),
+  getMonthlyTrends:   () => axios.get('/analytics/monthly-trends'),
+  getOverdue:         () => axios.get('/analytics/overdue'),
+  runETL:             () => axios.post('/analytics/run-etl'),
+};
 
 /* ── Hash router ─────────────────────────────────────────────────────── */
 function useHash() {
@@ -643,6 +651,191 @@ function Search() {
   );
 }
 
+/* ── Analytics ───────────────────────────────────────────────────────── */
+function BarChart({ data, labelKey, valueKey, color }) {
+  if (!data || data.length === 0) return React.createElement('p', { style: { color: '#888', padding: '1rem 0' } }, 'No data — run ETL first.');
+  const max = Math.max(...data.map(d => d[valueKey]));
+  return React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '7px' } },
+    data.map((d, i) =>
+      React.createElement('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: '8px' } },
+        React.createElement('div', { title: d[labelKey], style: { width: '160px', fontSize: '12px', textAlign: 'right', color: '#555', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0 } }, d[labelKey]),
+        React.createElement('div', { style: { flex: 1, background: '#f0f0f0', borderRadius: '4px', height: '22px' } },
+          React.createElement('div', { style: { width: `${(d[valueKey]/max)*100}%`, background: color||'#4f46e5', borderRadius: '4px', height: '100%', minWidth: '2px' } })
+        ),
+        React.createElement('div', { style: { width: '32px', fontSize: '12px', fontWeight: 600, color: '#333' } }, d[valueKey])
+      )
+    )
+  );
+}
+
+function PieChart({ data, labelKey, valueKey }) {
+  if (!data || data.length === 0) return React.createElement('p', { style: { color: '#888', padding: '1rem 0' } }, 'No data — run ETL first.');
+  const COLORS = ['#4f46e5','#06b6d4','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6'];
+  const total = data.reduce((s, d) => s + d[valueKey], 0);
+  let cum = -Math.PI / 2;
+  const cx = 90, cy = 90, r = 80;
+  const slices = data.map((d, i) => {
+    const angle = (d[valueKey] / total) * 2 * Math.PI;
+    const x1 = cx + r * Math.cos(cum), y1 = cy + r * Math.sin(cum);
+    cum += angle;
+    const x2 = cx + r * Math.cos(cum), y2 = cy + r * Math.sin(cum);
+    return { path: `M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${angle > Math.PI ? 1 : 0},1 ${x2},${y2} Z`, color: COLORS[i % COLORS.length], label: d[labelKey], value: d[valueKey] };
+  });
+  return React.createElement('div', { style: { display: 'flex', gap: '24px', alignItems: 'center', flexWrap: 'wrap' } },
+    React.createElement('svg', { viewBox: '0 0 180 180', style: { width: '180px', flexShrink: 0 } },
+      slices.map((s, i) => React.createElement('path', { key: i, d: s.path, fill: s.color, stroke: '#fff', strokeWidth: '1.5' }))
+    ),
+    React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: '7px' } },
+      slices.map((s, i) =>
+        React.createElement('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px' } },
+          React.createElement('div', { style: { width: '12px', height: '12px', borderRadius: '3px', background: s.color, flexShrink: 0 } }),
+          React.createElement('span', { style: { color: '#444' } }, s.label),
+          React.createElement('span', { style: { fontWeight: 600, color: '#333' } }, `(${s.value})`)
+        )
+      )
+    )
+  );
+}
+
+function LineChart({ data, labelKey, valueKey }) {
+  if (!data || data.length === 0) return React.createElement('p', { style: { color: '#888', padding: '1rem 0' } }, 'No data — run ETL first.');
+  const w = 600, h = 180, pl = 40, pr = 20, pt = 20, pb = 40;
+  const iw = w - pl - pr, ih = h - pt - pb;
+  const max = Math.max(...data.map(d => d[valueKey]));
+  const step = iw / (data.length - 1 || 1);
+  const ys = v => ih - (v / (max || 1)) * ih;
+  const pts = data.map((d, i) => `${pl + i*step},${pt + ys(d[valueKey])}`).join(' ');
+  const every = Math.ceil(data.length / 10);
+  return React.createElement('div', { style: { overflowX: 'auto' } },
+    React.createElement('svg', { viewBox: `0 0 ${w} ${h}`, style: { width: '100%', maxWidth: w, display: 'block' } },
+      React.createElement('polyline', { points: pts, fill: 'none', stroke: '#4f46e5', strokeWidth: '2.5' }),
+      React.createElement('line', { x1: pl, y1: pt, x2: pl, y2: pt+ih, stroke: '#ccc' }),
+      React.createElement('line', { x1: pl, y1: pt+ih, x2: pl+iw, y2: pt+ih, stroke: '#ccc' }),
+      ...[0,0.25,0.5,0.75,1].map((t,i) => React.createElement('text', { key: i, x: pl-4, y: pt+ys(t*max)+4, textAnchor: 'end', fontSize: '10', fill: '#666' }, Math.round(t*max))),
+      ...data.map((d, i) => React.createElement('g', { key: i },
+        React.createElement('circle', { cx: pl+i*step, cy: pt+ys(d[valueKey]), r: '3.5', fill: '#4f46e5' }),
+        i % every === 0 && React.createElement('text', { x: pl+i*step, y: h-8, textAnchor: 'middle', fontSize: '10', fill: '#666' }, d[labelKey].slice(2))
+      ))
+    )
+  );
+}
+
+function Analytics() {
+  const [status,   setStatus]   = useState(null);
+  const [mb,       setMb]       = useState([]);
+  const [cat,      setCat]      = useState([]);
+  const [monthly,  setMonthly]  = useState([]);
+  const [overdue,  setOverdue]  = useState([]);
+  const [loading,  setLoading]  = useState(true);
+  const [running,  setRunning]  = useState(false);
+  const [msg,      setMsg]      = useState('');
+
+  const fetchAll = () => {
+    setLoading(true);
+    Promise.all([
+      analyticsAPI.getStatus(),
+      analyticsAPI.getMostBorrowed(10),
+      analyticsAPI.getCategoryBorrowing(),
+      analyticsAPI.getMonthlyTrends(),
+      analyticsAPI.getOverdue(),
+    ]).then(([st, m, c, mo, ov]) => {
+      setStatus(st.data); setMb(m.data); setCat(c.data); setMonthly(mo.data); setOverdue(ov.data);
+    }).catch(console.error).finally(() => setLoading(false));
+  };
+
+  useEffect(() => { fetchAll(); }, []);
+
+  const runETL = () => {
+    setRunning(true); setMsg('');
+    analyticsAPI.runETL()
+      .then(r => { setMsg(`✓ ETL completed: ${r.data.most_borrowed_count} books tracked, ${r.data.overdue_count} overdue.`); fetchAll(); })
+      .catch(e => setMsg('✗ ETL failed: ' + (e.response?.data?.detail || e.message)))
+      .finally(() => setRunning(false));
+  };
+
+  if (loading) return React.createElement('div', { className: 'empty-state' }, React.createElement('p', null, 'Loading analytics...'));
+
+  const isRun = status && status.etl_run;
+
+  return (
+    <div>
+      <div className="page-header" style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:'12px' }}>
+        <div>
+          <h1>Analytics Dashboard</h1>
+          <p>ETL-powered borrowing insights · {status?.last_run_at ? `Last run: ${new Date(status.last_run_at).toLocaleString()}` : 'Not yet run'}</p>
+        </div>
+        <button className={`btn btn-primary`} onClick={runETL} disabled={running}>{running ? 'Running ETL…' : '▶ Run ETL Pipeline'}</button>
+      </div>
+
+      {msg && (
+        <div className="alert" style={{ background: msg.startsWith('✓') ? '#f0fdf4' : '#fff5f5', color: msg.startsWith('✓') ? '#166534' : '#991b1b', borderLeft: `4px solid ${msg.startsWith('✓') ? '#10b981' : '#ef4444'}`, marginBottom:'1rem' }}>
+          {msg}
+        </div>
+      )}
+
+      {status && (
+        <div className="stats-grid" style={{ marginBottom:'1.5rem' }}>
+          <div className="stat-card"><div className="stat-icon blue">📊</div><div className="stat-info"><h3>{status.most_borrowed_count}</h3><p>Books Tracked</p></div></div>
+          <div className="stat-card"><div className="stat-icon purple">🏷️</div><div className="stat-info"><h3>{status.category_count}</h3><p>Categories</p></div></div>
+          <div className="stat-card"><div className="stat-icon green">📅</div><div className="stat-info"><h3>{status.monthly_trend_count}</h3><p>Monthly Periods</p></div></div>
+          <div className="stat-card"><div className="stat-icon orange">⚠️</div><div className="stat-info"><h3>{status.overdue_count}</h3><p>Overdue</p></div></div>
+        </div>
+      )}
+
+      {!isRun && (
+        <div className="card" style={{ textAlign:'center', padding:'3rem' }}>
+          <p style={{ fontSize:'1rem', color:'#666', marginBottom:'0.5rem' }}>No analytics data yet.</p>
+          <p style={{ color:'#aaa', fontSize:'0.9rem' }}>Click <strong>Run ETL Pipeline</strong> above to process the dataset.</p>
+        </div>
+      )}
+
+      {isRun && (
+        <div>
+          <div className="two-col" style={{ marginBottom:'1.5rem' }}>
+            <div className="card">
+              <div className="card-title">Top 10 Most Borrowed Books</div>
+              <BarChart data={mb} labelKey="book_title" valueKey="borrow_count" color="#4f46e5" />
+            </div>
+            <div className="card">
+              <div className="card-title">Category-wise Borrowing</div>
+              <PieChart data={cat} labelKey="category" valueKey="borrow_count" />
+            </div>
+          </div>
+
+          <div className="card" style={{ marginBottom:'1.5rem' }}>
+            <div className="card-title">Monthly Borrowing Trends (2024–2025)</div>
+            <LineChart data={monthly} labelKey="year_month" valueKey="borrow_count" />
+          </div>
+
+          <div className="card">
+            <div className="card-title">Overdue Transactions ({overdue.length})</div>
+            {overdue.length === 0
+              ? <div className="empty-state"><p>No overdue transactions.</p></div>
+              : <div className="table-container">
+                  <table>
+                    <thead><tr><th>Txn #</th><th>Book</th><th>Borrower</th><th>Email</th><th>Borrow Date</th><th>Days Overdue</th></tr></thead>
+                    <tbody>
+                      {overdue.map(row => (
+                        <tr key={row.id}>
+                          <td>#{row.transaction_id}</td>
+                          <td><strong>{row.book_title}</strong></td>
+                          <td>{row.borrower_name}</td>
+                          <td style={{ fontSize:'0.85rem', color:'#555' }}>{row.borrower_email}</td>
+                          <td>{row.borrow_date}</td>
+                          <td><span className="badge badge-borrowed">{row.days_overdue}d</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+            }
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ── App ─────────────────────────────────────────────────────────────── */
 const NAV = [
   { hash: '#dashboard',     label: 'Dashboard' },
@@ -650,6 +843,7 @@ const NAV = [
   { hash: '#borrowers',     label: 'Borrowers' },
   { hash: '#borrow-return', label: 'Borrow/Return' },
   { hash: '#search',        label: 'Search' },
+  { hash: '#analytics',     label: 'Analytics' },
 ];
 
 const PAGE_MAP = {
@@ -658,6 +852,7 @@ const PAGE_MAP = {
   '#borrowers':     <Borrowers />,
   '#borrow-return': <BorrowReturn />,
   '#search':        <Search />,
+  '#analytics':     <Analytics />,
 };
 
 function App() {
