@@ -1,0 +1,25 @@
+INFO:     Will watch for changes in these directories: ['C:\\Users\\aravind.g\\Desktop\\rag_assistant_project\\rag_assistant_with_evaluation']
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     Started reloader process [20332] using WatchFiles
+USER_AGENT environment variable not set, consider setting it to identify your requests.
+INFO:     Started server process [27304]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'evaluate_rag.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27304]
+WARNING:  WatchFiles detected changes in 'web\app.py'. Reloading...
+USER_AGENT environment variable not set, consider setting it to identify your requests.
+INFO:     Started server process [28084]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28084]
+USER_AGENT environment variable not set, consider setting it to identify your requests.
+INFO:     Started server process [3704]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
