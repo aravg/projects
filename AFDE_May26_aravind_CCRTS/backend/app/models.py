@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from .database import Base
@@ -88,3 +88,95 @@ class Notification(Base):
     is_read = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
     user = relationship("User")
+
+
+# ── Phase 2: ETL Analytics Tables ────────────────────────────────────────────
+
+class ETLRunLog(Base):
+    """Tracks each ETL pipeline execution."""
+    __tablename__ = "etl_run_log"
+    id = Column(Integer, primary_key=True, index=True)
+    run_at = Column(DateTime, server_default=func.now())
+    status = Column(String(20))              # success | failed
+    records_extracted = Column(Integer, default=0)
+    records_transformed = Column(Integer, default=0)
+    records_loaded = Column(Integer, default=0)
+    duration_seconds = Column(Float, nullable=True)
+    error_message = Column(Text, nullable=True)
+
+
+class ComplaintAnalytics(Base):
+    """Cleaned per-complaint records loaded from the ETL pipeline."""
+    __tablename__ = "complaint_analytics"
+    id = Column(Integer, primary_key=True, index=True)
+    source_complaint_id = Column(Integer, index=True)
+    complaint_number = Column(String(20))
+    customer_name = Column(String(100))
+    category = Column(String(100))
+    priority = Column(String(20))
+    status = Column(String(30))
+    sla_hours_limit = Column(Float, nullable=True)
+    resolution_time_hours = Column(Float, nullable=True)
+    is_sla_breached = Column(Boolean, default=False)
+    customer_rating = Column(Float, nullable=True)
+    region = Column(String(50), nullable=True)
+    assigned_agent = Column(String(100), nullable=True)
+    created_at = Column(String(30), nullable=True)
+    resolved_at = Column(String(30), nullable=True)
+    etl_loaded_at = Column(DateTime, server_default=func.now())
+
+
+class SLAAnalytics(Base):
+    """SLA breach summary grouped by category and priority."""
+    __tablename__ = "sla_analytics"
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String(100))
+    priority = Column(String(20))
+    total_complaints = Column(Integer, default=0)
+    sla_breached = Column(Integer, default=0)
+    sla_compliant = Column(Integer, default=0)
+    breach_rate = Column(Float, default=0.0)
+    avg_resolution_hours = Column(Float, nullable=True)
+    etl_loaded_at = Column(DateTime, server_default=func.now())
+
+
+class CategoryAnalytics(Base):
+    """Complaint KPIs aggregated per category."""
+    __tablename__ = "category_analytics"
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String(100))
+    total_complaints = Column(Integer, default=0)
+    open_complaints = Column(Integer, default=0)
+    resolved_complaints = Column(Integer, default=0)
+    escalated_complaints = Column(Integer, default=0)
+    avg_resolution_hours = Column(Float, nullable=True)
+    avg_customer_rating = Column(Float, nullable=True)
+    etl_loaded_at = Column(DateTime, server_default=func.now())
+
+
+class AgentPerformanceAnalytics(Base):
+    """Agent-level performance metrics from ETL pipeline."""
+    __tablename__ = "agent_performance_analytics"
+    id = Column(Integer, primary_key=True, index=True)
+    agent_name = Column(String(100))
+    total_assigned = Column(Integer, default=0)
+    total_resolved = Column(Integer, default=0)
+    sla_met = Column(Integer, default=0)
+    sla_breached = Column(Integer, default=0)
+    avg_resolution_hours = Column(Float, nullable=True)
+    avg_customer_rating = Column(Float, nullable=True)
+    resolution_rate = Column(Float, default=0.0)
+    etl_loaded_at = Column(DateTime, server_default=func.now())
+
+
+class ResolutionTrendAnalytics(Base):
+    """Monthly complaint and resolution trend data."""
+    __tablename__ = "resolution_trend_analytics"
+    id = Column(Integer, primary_key=True, index=True)
+    month = Column(String(7))   # YYYY-MM
+    total_complaints = Column(Integer, default=0)
+    resolved_complaints = Column(Integer, default=0)
+    sla_breaches = Column(Integer, default=0)
+    avg_resolution_hours = Column(Float, nullable=True)
+    resolution_rate = Column(Float, default=0.0)
+    etl_loaded_at = Column(DateTime, server_default=func.now())

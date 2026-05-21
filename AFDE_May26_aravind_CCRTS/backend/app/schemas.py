@@ -111,3 +111,89 @@ class NotificationOut(BaseModel):
     is_read: bool
     created_at: datetime
     model_config = {"from_attributes": True}
+
+
+# ── Phase 2: Analytics Schemas ────────────────────────────────────────────────
+
+class ETLRunLogOut(BaseModel):
+    id: Optional[int] = None
+    run_at: Optional[str] = None
+    status: str
+    records_extracted: int = 0
+    records_transformed: int = 0
+    records_loaded: int = 0
+    duration_seconds: Optional[float] = None
+    error_message: Optional[str] = None
+
+class ETLStatusOut(BaseModel):
+    last_run: ETLRunLogOut
+    total_analytics_records: int
+
+class SLAPriorityItem(BaseModel):
+    priority: str
+    total: int
+    breached: int
+    compliant: int
+    breach_rate: float
+
+class SLACategoryItem(BaseModel):
+    category: str
+    total: int
+    breached: int
+    breach_rate: float
+
+class SLASummary(BaseModel):
+    total_complaints: int
+    total_breached: int
+    total_compliant: int
+    overall_breach_rate: float
+
+class SLABreachesOut(BaseModel):
+    summary: SLASummary
+    by_priority: List[SLAPriorityItem]
+    by_category: List[SLACategoryItem]
+    detailed: List[dict]
+
+class CategoryItem(BaseModel):
+    category: str
+    total_complaints: int
+    open_complaints: int
+    resolved_complaints: int
+    escalated_complaints: int
+    resolution_rate: float
+    avg_resolution_hours: Optional[float] = None
+    avg_customer_rating: Optional[float] = None
+
+class CategoryAnalysisOut(BaseModel):
+    categories: List[CategoryItem]
+
+class AgentItem(BaseModel):
+    agent_name: str
+    total_assigned: int
+    total_resolved: int
+    sla_met: int
+    sla_breached: int
+    resolution_rate: float
+    avg_resolution_hours: Optional[float] = None
+    avg_customer_rating: Optional[float] = None
+
+class AgentPerformanceOut(BaseModel):
+    agents: List[AgentItem]
+
+class TrendItem(BaseModel):
+    month: str
+    total_complaints: int
+    resolved_complaints: int
+    sla_breaches: int
+    resolution_rate: float
+    avg_resolution_hours: Optional[float] = None
+
+class ResolutionTrendsOut(BaseModel):
+    trends: List[TrendItem]
+
+class ETLRunResult(BaseModel):
+    message: str
+    records_extracted: int = 0
+    records_transformed: int = 0
+    records_loaded: int = 0
+    duration_seconds: float = 0.0

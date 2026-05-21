@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   LayoutDashboard, FileText, PlusCircle, Users,
-  AlertTriangle, BarChart2, Bell, LogOut, ShieldCheck, List
+  AlertTriangle, BarChart2, Bell, LogOut, ShieldCheck, List, Database
 } from 'lucide-react';
 
 const NavItem = ({ to, icon: Icon, label }) => (
@@ -22,7 +22,7 @@ const NavItem = ({ to, icon: Icon, label }) => (
 );
 
 export default function Sidebar() {
-  const { user, logout, isAdmin, isSupervisor, isAgent, canManage } = useAuth();
+  const { user, logout, isAdmin, isAgent, canManage } = useAuth();
 
   return (
     <aside className="w-64 min-h-screen bg-gradient-to-b from-blue-700 to-blue-900 flex flex-col shadow-xl">
@@ -71,6 +71,7 @@ export default function Sidebar() {
           <>
             <p className="text-blue-300 text-xs font-semibold uppercase tracking-wider px-4 py-2 mt-2">Management</p>
             <NavItem to="/reports" icon={BarChart2} label="Reports" />
+            <NavItem to="/etl-analytics" icon={Database} label="ETL Analytics" />
             {isAdmin && <NavItem to="/users" icon={Users} label="Users" />}
           </>
         )}

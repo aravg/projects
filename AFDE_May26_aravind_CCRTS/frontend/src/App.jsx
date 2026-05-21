@@ -13,6 +13,7 @@ import Escalations from './pages/Escalations';
 import Reports from './pages/Reports';
 import UserManagement from './pages/UserManagement';
 import Notifications from './pages/Notifications';
+import ETLDashboard from './pages/ETLDashboard';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
           <Route path="/reports" element={<ProtectedRoute roles={['admin','supervisor','quality_team']}><Reports /></ProtectedRoute>} />
           <Route path="/users" element={<ProtectedRoute roles={['admin']}><UserManagement /></ProtectedRoute>} />
           <Route path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+          <Route path="/etl-analytics" element={<ProtectedRoute roles={['admin','supervisor','quality_team']}><ETLDashboard /></ProtectedRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>

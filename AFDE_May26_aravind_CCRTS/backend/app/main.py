@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import engine
 from . import models
-from .routes import auth, complaints, users, dashboard, categories, feedback, notifications
+from .routes import auth, complaints, users, dashboard, categories, feedback, notifications, analytics
 from .seed import seed_data
 
 models.Base.metadata.create_all(bind=engine)
@@ -24,6 +24,7 @@ app.include_router(dashboard.router)
 app.include_router(categories.router)
 app.include_router(feedback.router)
 app.include_router(notifications.router)
+app.include_router(analytics.router)
 
 @app.on_event("startup")
 async def startup():
