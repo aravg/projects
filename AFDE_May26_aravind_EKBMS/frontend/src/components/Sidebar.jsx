@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, FileText, FolderOpen, Search,
   CheckSquare, Users, BarChart3, BookOpen,
-  LogOut, ChevronRight, Settings
+  LogOut, ChevronRight, Settings, Database
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import toast from 'react-hot-toast'
@@ -16,6 +16,7 @@ const navItems = [
   { path: '/approvals', icon: CheckSquare, label: 'Approval Queue', roles: ['reviewer', 'admin'] },
   { path: '/users', icon: Users, label: 'User Management', roles: ['admin'] },
   { path: '/reports', icon: BarChart3, label: 'Reports', roles: ['admin'] },
+  { path: '/etl', icon: Database, label: 'ETL Management', roles: ['admin'] },
 ]
 
 function Sidebar({ isOpen, onClose }) {

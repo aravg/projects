@@ -144,4 +144,41 @@ router.get('/popular-categories', authenticate, (req, res) => {
   }
 });
 
+// GET /api/analytics/author-activity — Per-author article stats (admin only)
+router.get('/author-activity', authenticate, authorize('admin'), (req, res) => {
+  try {
+    const db = getDb();
+    const authors = db.prepare(`
+      SELECT u.id, u.name, u.email, u.department,
+        COALESCE(art.article_count, 0) as article_count,
+        COALESCE(art.total_views, 0) as total_views,
+        COALESCE(art.approved_count, 0) as approved_count,
+        COALESCE(art.pending_count, 0) as pending_count,
+        COALESCE(rat.avg_rating, 0) as avg_rating
+      FROM users u
+      LEFT JOIN (
+        SELECT author_id,
+          COUNT(*) as article_count,
+          SUM(view_count) as total_views,
+          COUNT(CASE WHEN status = 'approved' THEN 1 END) as approved_count,
+          COUNT(CASE WHEN status = 'pending_approval' THEN 1 END) as pending_count
+        FROM articles
+        GROUP BY author_id
+      ) art ON u.id = art.author_id
+      LEFT JOIN (
+        SELECT a.author_id, ROUND(AVG(r.rating), 2) as avg_rating
+        FROM ratings r
+        JOIN articles a ON r.article_id = a.id
+        GROUP BY a.author_id
+      ) rat ON u.id = rat.author_id
+      WHERE u.role IN ('author', 'admin')
+      ORDER BY total_views DESC, article_count DESC
+    `).all();
+    res.json({ success: true, data: authors });
+  } catch (err) {
+    console.error('Author activity error:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
 module.exports = router;

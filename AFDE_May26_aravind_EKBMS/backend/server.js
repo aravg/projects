@@ -14,6 +14,7 @@ const approvalRoutes = require('./routes/approvals');
 const userRoutes = require('./routes/users');
 const analyticsRoutes = require('./routes/analytics');
 const notificationRoutes = require('./routes/notifications');
+const etlRoutes = require('./routes/etl');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -39,6 +40,7 @@ app.use('/api/approvals', approvalRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/etl', etlRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'EKBMS API is running', timestamp: new Date().toISOString() });

@@ -208,6 +208,18 @@ function createTables() {
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
       FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE SET NULL
     );
+
+    CREATE TABLE IF NOT EXISTS etl_runs (
+      id TEXT PRIMARY KEY,
+      source_file TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'running' CHECK(status IN ('running','completed','failed')),
+      records_extracted INTEGER NOT NULL DEFAULT 0,
+      records_transformed INTEGER NOT NULL DEFAULT 0,
+      records_loaded INTEGER NOT NULL DEFAULT 0,
+      error_message TEXT,
+      started_at TEXT NOT NULL DEFAULT (datetime('now')),
+      completed_at TEXT
+    );
   `);
   saveToFile();
 }

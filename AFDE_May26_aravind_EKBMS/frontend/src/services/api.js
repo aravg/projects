@@ -100,7 +100,13 @@ export const analyticsAPI = {
   getDashboard: () => api.get('/analytics/dashboard'),
   getSearchTrends: () => api.get('/analytics/search-trends'),
   getUserActivity: () => api.get('/analytics/user-activity'),
-  getPopularCategories: () => api.get('/analytics/popular-categories')
+  getPopularCategories: () => api.get('/analytics/popular-categories'),
+  getAuthorActivity: () => api.get('/analytics/author-activity')
+}
+
+export const etlAPI = {
+  getRuns: () => api.get('/etl/runs'),
+  trigger: () => api.post('/etl/trigger')
 }
 
 export const notificationsAPI = {

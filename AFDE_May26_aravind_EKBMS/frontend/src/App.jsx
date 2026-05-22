@@ -16,6 +16,7 @@ import Search from './pages/Search'
 import ApprovalQueue from './pages/ApprovalQueue'
 import UserManagement from './pages/UserManagement'
 import Reports from './pages/Reports'
+import ETLManagement from './pages/ETLManagement'
 import Profile from './pages/Profile'
 
 function App() {
@@ -60,6 +61,11 @@ function App() {
           <Route path="/reports" element={
             <ProtectedRoute roles={['admin']}>
               <Reports />
+            </ProtectedRoute>
+          } />
+          <Route path="/etl" element={
+            <ProtectedRoute roles={['admin']}>
+              <ETLManagement />
             </ProtectedRoute>
           } />
           <Route path="/profile" element={<Profile />} />
