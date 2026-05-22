@@ -1,0 +1,129 @@
+participant_name,program_name,rating,comments,submitted_date
+Aarav Shah,React Workshop 2025,5,Excellent hands-on sessions and real-world examples.,2025-01-05
+Priya Patel,React Workshop 2025,4,Very well structured. Would love more advanced topics.,2025-01-06
+Rahul Sharma,React Workshop 2025,5,Loved the project-based learning approach.,2025-01-07
+Ananya Krishnan,React Workshop 2025,3,Good content but pace was a bit fast.,2025-01-08
+Vivek Nair,React Workshop 2025,4,Great instructor. Practical examples were helpful.,2025-01-09
+Kavya Reddy,React Workshop 2025,5,Best workshop I have attended this year.,2025-01-10
+Arjun Mehta,React Workshop 2025,2,Expected more depth on hooks and context.,2025-01-11
+Sneha Iyer,React Workshop 2025,4,Enjoyed the live coding demos.,2025-01-12
+Rohan Gupta,React Workshop 2025,5,Outstanding! Would highly recommend.,2025-01-13
+Deepika Joshi,React Workshop 2025,3,Decent coverage but needs updated examples.,2025-01-14
+Aakash Singh,React Workshop 2025,4,Solid foundational workshop.,2025-01-15
+Riya Desai,React Workshop 2025,5,Transformative learning experience.,2025-01-16
+Vikram Kumar,Python Fundamentals,5,Perfect for beginners. Clear explanations.,2025-01-17
+Pooja Malhotra,Python Fundamentals,4,Well-paced and easy to follow.,2025-01-18
+Nikhil Rao,Python Fundamentals,4,Good exercises. Wish there were more challenges.,2025-01-19
+Anjali Verma,Python Fundamentals,5,Instructor was very knowledgeable and patient.,2025-01-20
+Siddharth Bose,Python Fundamentals,3,Average content. Some topics felt rushed.,2025-01-21
+Tanvi Kapoor,Python Fundamentals,5,Brilliant course structure.,2025-01-22
+Karthik Murugan,Python Fundamentals,4,Good balance between theory and practice.,2025-01-23
+Isha Pandey,Python Fundamentals,2,Too basic for my level. Needed more advanced content.,2025-01-24
+Akash Mishra,Python Fundamentals,5,Really enjoyed the project assignments.,2025-01-25
+Divya Nambiar,Python Fundamentals,4,Clear and concise. Good for starters.,2025-01-26
+Harsh Agarwal,Python Fundamentals,3,Decent but could use more examples.,2025-01-27
+Sruthi Pillai,Python Fundamentals,5,Exceeded my expectations.,2025-01-28
+Shyam Tiwari,Python Fundamentals,4,Informative and engaging.,2025-01-29
+Meera Sundaram,Data Science Bootcamp,5,Comprehensive coverage of ML and data analysis.,2025-02-01
+Ravi Balasubramanian,Data Science Bootcamp,4,Great hands-on with Pandas and NumPy.,2025-02-02
+Preeti Sharma,Data Science Bootcamp,5,One of the best bootcamps I have been to.,2025-02-03
+Arun Nair,Data Science Bootcamp,4,Well structured with good project work.,2025-02-04
+Lakshmi Iyer,Data Science Bootcamp,3,Good but some sessions were too theoretical.,2025-02-05
+Vijay Krishnamurthy,Data Science Bootcamp,5,Excellent real-world datasets used.,2025-02-06
+Sunita Mehta,Data Science Bootcamp,4,Very informative. Loved the capstone project.,2025-02-07
+Ganesh Patel,Data Science Bootcamp,2,Expected more Python coding. Too much theory.,2025-02-08
+Nisha Joshi,Data Science Bootcamp,5,Superb! Changed my career perspective.,2025-02-09
+Tarun Verma,Data Science Bootcamp,4,Great instructors and learning material.,2025-02-10
+Pavithra Reddy,Data Science Bootcamp,3,Average experience. Content was dated.,2025-02-11
+Suresh Kumar,Data Science Bootcamp,5,Amazing depth of content.,2025-02-12
+Yamini Kapoor,DevOps & CI/CD Training,5,Fantastic practical exposure to Docker and Jenkins.,2025-02-13
+Naveen Bose,DevOps & CI/CD Training,4,Good theoretical and hands-on balance.,2025-02-14
+Keerthi Murugan,DevOps & CI/CD Training,5,Learned a lot about pipelines and automation.,2025-02-15
+Santosh Pandey,DevOps & CI/CD Training,3,Decent course but CI/CD setup was confusing.,2025-02-16
+Bhavna Agarwal,DevOps & CI/CD Training,4,Very practical. Good real-world case studies.,2025-02-17
+Pradeep Pillai,DevOps & CI/CD Training,5,Best DevOps training I have had.,2025-02-18
+Rohini Tiwari,DevOps & CI/CD Training,4,Enjoyed the Kubernetes deep dive sessions.,2025-02-19
+Sanjay Sundaram,DevOps & CI/CD Training,2,Needed more time on troubleshooting exercises.,2025-02-20
+Chandrika Balasubramanian,DevOps & CI/CD Training,5,Highly recommend for any developer.,2025-02-21
+Ashwin Sharma,DevOps & CI/CD Training,4,Good course material with clear explanations.,2025-02-22
+Deepa Nair,DevOps & CI/CD Training,3,Some labs were broken and wasted time.,2025-02-23
+Girish Iyer,DevOps & CI/CD Training,5,Outstanding training environment.,2025-02-24
+Madhuri Mehta,Cloud Computing Basics,4,Good introduction to AWS and Azure.,2025-03-01
+Pravin Patel,Cloud Computing Basics,5,Very clear explanations of cloud concepts.,2025-03-02
+Smita Joshi,Cloud Computing Basics,4,Helpful for beginners in cloud technology.,2025-03-03
+Vishal Verma,Cloud Computing Basics,3,Okay course. Needed deeper dives into services.,2025-03-04
+Kishore Reddy,Cloud Computing Basics,5,Loved the hands-on cloud labs.,2025-03-05
+Usha Kumar,Cloud Computing Basics,4,Good overview but could use advanced content.,2025-03-06
+Manish Kapoor,Cloud Computing Basics,5,Excellent preparation for cloud certification.,2025-03-07
+Revathy Bose,Cloud Computing Basics,4,Practical demos were very helpful.,2025-03-08
+Sunil Murugan,Cloud Computing Basics,2,Too surface level. No hands-on depth.,2025-03-09
+Lavanya Pandey,Cloud Computing Basics,5,Best beginner cloud course available.,2025-03-10
+Krishnamurthy Agarwal,Cloud Computing Basics,4,Well organized and easy to understand.,2025-03-11
+Anand Pillai,Cloud Computing Basics,3,Average. Slides were outdated.,2025-03-12
+Archana Tiwari,Agile & Scrum Masterclass,5,Completely changed how I manage my projects.,2025-03-13
+Venkat Sundaram,Agile & Scrum Masterclass,4,Very practical scrum exercises.,2025-03-14
+Kamala Balasubramanian,Agile & Scrum Masterclass,5,Excellent facilitator. Great group activities.,2025-03-15
+Dhruv Sharma,Agile & Scrum Masterclass,4,Good mix of theory and simulation.,2025-03-16
+Pallavi Nair,Agile & Scrum Masterclass,3,Useful but already knew most of the content.,2025-03-17
+Dinesh Iyer,Agile & Scrum Masterclass,5,Loved the sprint simulation exercises.,2025-03-18
+Rekha Mehta,Agile & Scrum Masterclass,4,Very engaging trainer. Learned retrospectives well.,2025-03-19
+Jitendra Patel,Agile & Scrum Masterclass,2,Too much focus on theory over practice.,2025-03-20
+Sudha Joshi,Agile & Scrum Masterclass,5,Invaluable for any team lead.,2025-03-21
+Murali Verma,Agile & Scrum Masterclass,4,Solid masterclass with useful tools.,2025-03-22
+Anjana Reddy,UI/UX Design Thinking,5,Inspiring and creative sessions.,2025-04-01
+Rajesh Kumar,UI/UX Design Thinking,4,Great introduction to design thinking process.,2025-04-02
+Nandini Kapoor,UI/UX Design Thinking,5,Helped me redesign our product completely.,2025-04-03
+Harish Bose,UI/UX Design Thinking,3,Good but needed more Figma practice.,2025-04-04
+Geeta Murugan,UI/UX Design Thinking,4,Very inspiring facilitator.,2025-04-05
+Ritesh Pandey,UI/UX Design Thinking,5,Transformed my approach to problem solving.,2025-04-06
+Sowmya Agarwal,UI/UX Design Thinking,4,Enjoyed the empathy mapping exercises.,2025-04-07
+Dinkar Pillai,UI/UX Design Thinking,2,Not enough hands-on Figma or prototyping work.,2025-04-08
+Padma Tiwari,UI/UX Design Thinking,5,World-class content and delivery.,2025-04-09
+Subramaniam Sundaram,UI/UX Design Thinking,4,Practical and immediately applicable.,2025-04-10
+Rani Balasubramanian,Machine Learning Essentials,5,Exceptional depth on ML algorithms.,2025-04-11
+Vinoth Sharma,Machine Learning Essentials,4,Good coverage of supervised learning.,2025-04-12
+Chitra Nair,Machine Learning Essentials,5,Best ML course I have taken online.,2025-04-13
+Balaji Iyer,Machine Learning Essentials,4,Thorough treatment of model evaluation.,2025-04-14
+Sumathi Mehta,Machine Learning Essentials,3,Good but needed more maths background.,2025-04-15
+Ramesh Patel,Machine Learning Essentials,5,Phenomenal project sessions.,2025-04-16
+Abhinav Joshi,Machine Learning Essentials,4,Loved the neural network deep dives.,2025-04-17
+Kavitha Verma,Machine Learning Essentials,2,Assumed too much prior knowledge.,2025-04-18
+Navneeth Reddy,Machine Learning Essentials,5,Brilliant and challenging course.,2025-04-19
+Sangeetha Kumar,Machine Learning Essentials,4,Excellent teaching style.,2025-04-20
+Thiruvengadam Kapoor,SQL & Database Design,5,Excellent practical SQL exercises.,2025-04-21
+Vijayalakshmi Bose,SQL & Database Design,4,Great coverage of joins and indexing.,2025-04-22
+Senthil Murugan,SQL & Database Design,5,Very thorough and methodical approach.,2025-04-23
+Prabhakaran Pandey,SQL & Database Design,4,Helpful for strengthening database skills.,2025-04-24
+Malathi Agarwal,SQL & Database Design,3,Decent but lacked NoSQL comparison.,2025-04-25
+Selvam Pillai,SQL & Database Design,5,Loved the schema design workshop.,2025-04-26
+Vasantha Tiwari,SQL & Database Design,4,Good exercises for real-world scenarios.,2025-04-27
+Rajeswari Sundaram,SQL & Database Design,2,Too basic. I needed advanced query optimization.,2025-04-28
+Muthuraman Balasubramanian,SQL & Database Design,5,Outstanding content for data engineers.,2025-04-29
+Eswari Sharma,SQL & Database Design,4,Well structured and engaging.,2025-04-30
+Ganapathy Nair,Leadership Development,5,Life-changing leadership insights.,2025-05-01
+Jayanthi Iyer,Leadership Development,4,Very practical leadership frameworks.,2025-05-02
+Subramanya Mehta,Leadership Development,5,Excellent exercises on emotional intelligence.,2025-05-03
+Visalakshi Patel,Leadership Development,4,Good mix of case studies and workshops.,2025-05-04
+Annamalai Joshi,Leadership Development,3,Useful content but delivery was slow.,2025-05-05
+Saradha Verma,Leadership Development,5,Completely transformed my leadership style.,2025-05-06
+Kamaladevi Reddy,Leadership Development,4,Great coaching techniques shared.,2025-05-07
+Thyagarajan Kumar,Leadership Development,2,Expected more on conflict resolution.,2025-05-08
+Parimala Kapoor,Leadership Development,5,Inspirational facilitator. Highly recommend.,2025-05-09
+Krishnaswamy Bose,Leadership Development,4,Very relevant and actionable content.,2025-05-10
+Nagalakshmi Murugan,Leadership Development,3,Decent but nothing groundbreaking.,2025-05-11
+Sundaresan Pandey,Leadership Development,5,Best professional development course ever.,2025-05-12
+Aarav Shah,React Workshop 2025,5,Excellent hands-on sessions and real-world examples.,2025-01-05
+Priya Patel,React Workshop 2025,4,Very well structured. Would love more advanced topics.,2025-01-06
+Rahul Sharma,React Workshop 2025,5,Loved the project-based learning approach.,2025-01-07
+Meera Sundaram,Data Science Bootcamp,5,Comprehensive coverage of ML and data analysis.,2025-02-01
+Yamini Kapoor,DevOps & CI/CD Training,5,Fantastic practical exposure to Docker and Jenkins.,2025-02-13
+Madhuri Mehta,Cloud Computing Basics,4,Good introduction to AWS and Azure.,2025-03-01
+Archana Tiwari,Agile & Scrum Masterclass,5,Completely changed how I manage my projects.,2025-03-13
+Anjana Reddy,UI/UX Design Thinking,5,Inspiring and creative sessions.,2025-04-01
+Rani Balasubramanian,Machine Learning Essentials,5,Exceptional depth on ML algorithms.,2025-04-11
+Thiruvengadam Kapoor,SQL & Database Design,5,Excellent practical SQL exercises.,2025-04-21
+Aarav Shah,Python Fundamentals,0,Invalid rating should be filtered out,2025-01-05
+Priya Patel,Cloud Computing Basics,6,Rating out of range - should be removed,2025-03-02
+,React Workshop 2025,4,Missing participant name row,2025-01-20
+Rahul Sharma,,3,Missing program name row,2025-01-21
+Kiran Bhat,DevOps & CI/CD Training,N/A,Non-numeric rating should be removed,2025-02-14

@@ -39,3 +39,53 @@ class FeedbackStats(BaseModel):
     total_count: int
     average_rating: float
     recent_feedback: List[FeedbackResponse]
+
+
+# ─── ETL Schemas ──────────────────────────────────────────────────────────────
+
+class ETLJobResponse(BaseModel):
+    job_id: int
+    filename: str
+    status: str
+    total_records: int
+    valid_records: int
+    duplicate_records: int
+    invalid_records: int
+    loaded_records: int
+    error_message: Optional[str]
+    created_at: datetime
+    completed_at: Optional[datetime]
+
+    class Config:
+        from_attributes = True
+
+
+class ETLJobSummary(BaseModel):
+    job_id: int
+    filename: str
+    status: str
+    total_records: int
+    loaded_records: int
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class AnalyticsByProgram(BaseModel):
+    program_name: str
+    total_responses: int
+    avg_rating: float
+    rating_1_count: int
+    rating_2_count: int
+    rating_3_count: int
+    rating_4_count: int
+    rating_5_count: int
+
+
+class OverallAnalytics(BaseModel):
+    total_feedback: int
+    average_rating: float
+    total_programs: int
+    total_etl_jobs: int
+    rating_distribution: dict

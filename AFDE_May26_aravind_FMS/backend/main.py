@@ -5,6 +5,7 @@ from typing import Optional
 import models
 from database import engine, get_db
 from routers import feedback
+from routers import etl
 import crud
 
 models.Base.metadata.create_all(bind=engine)
@@ -12,23 +13,24 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="Feedback Management System",
     description="Centralized feedback collection and management platform",
-    version="1.0.0",
+    version="2.0.0",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "null"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 app.include_router(feedback.router)
+app.include_router(etl.router)
 
 
 @app.get("/")
 def root():
-    return {"message": "Feedback Management System API", "version": "1.0.0", "docs": "/docs"}
+    return {"message": "Feedback Management System API", "version": "2.0.0", "docs": "/docs"}
 
 
 @app.get("/search")

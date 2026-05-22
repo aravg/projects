@@ -1,6 +1,6 @@
 # Feedback Management System (FMS)
 
-A centralized web-based system to collect, manage, search, and analyze feedback from participants, employees, or customers.
+A centralized web-based system to collect, manage, search, and analyze feedback from participants, employees, or customers — extended in Phase 2 with a full ETL pipeline for CSV/Excel imports.
 
 ## Tech Stack
 
@@ -9,12 +9,14 @@ A centralized web-based system to collect, manage, search, and analyze feedback 
 | Frontend | React 18 (CDN/SPA)   |
 | Backend  | Python FastAPI       |
 | Database | SQLite               |
+| ETL      | Python + Pandas      |
 | API Test | Postman / Swagger UI |
 
 ---
 
 ## Features
 
+### Phase 1 — Core Feedback Management
 - Submit feedback with participant name, program, rating (1–5), and comments
 - View all feedback in a searchable, filterable table
 - Dashboard showing total count, average rating, and recent submissions
@@ -22,59 +24,69 @@ A centralized web-based system to collect, manage, search, and analyze feedback 
 - Search by keyword, rating, or program/event name
 - Responsive UI — works on desktop and mobile
 
+### Phase 2 — ETL Pipeline & Analytics
+- Upload CSV or Excel files to import bulk feedback data
+- **Extract** — reads `.csv`, `.xlsx`, `.xls` files with flexible column name mapping
+- **Transform** — validates ratings (1–5), removes within-file duplicates, standardizes text (title case names, trim whitespace), drops rows with missing required fields
+- **Load** — inserts cleaned records into the feedback table; computes per-program analytics stored in a reporting table
+- ETL job history with status, record counts, and timestamps
+- Analytics dashboard: overall stats + per-program rating breakdown with visual bars
+- Downloadable analytics report (CSV)
+- Sample dataset with 130+ rows (includes intentional dirty data to demonstrate cleaning)
+
 ---
 
 ## Project Structure
 
 ```
-FMS_Project/
+AFDE_May26_aravind_FMS/
 ├── backend/
-│   ├── main.py          # FastAPI app entry point
-│   ├── database.py      # SQLAlchemy engine & session
-│   ├── models.py        # ORM models
-│   ├── schemas.py       # Pydantic request/response schemas
-│   ├── crud.py          # Database operations
+│   ├── main.py              # FastAPI app entry point
+│   ├── database.py          # SQLAlchemy engine & session
+│   ├── models.py            # ORM models (Feedback, ETLJob, FeedbackAnalytics)
+│   ├── schemas.py           # Pydantic request/response schemas
+│   ├── crud.py              # Database operations (Phase 1)
+│   ├── etl_service.py       # ETL Extract / Transform / Load logic
 │   ├── routers/
-│   │   └── feedback.py  # Feedback API routes
+│   │   ├── feedback.py      # Feedback CRUD routes
+│   │   └── etl.py           # ETL pipeline & analytics routes
 │   └── requirements.txt
+├── datasets/
+│   └── feedback_sample.csv  # 130-row sample dataset (use for ETL import)
 ├── frontend/
-│   ├── index.html       # Single-page app entry
-│   ├── style.css        # All styles
+│   ├── index.html           # Single-page app entry
+│   ├── style.css            # All styles
 │   └── src/
-│       └── App.js       # React components (runs via Babel CDN)
+│       └── App.js           # React components (runs via Babel CDN)
 ├── database/
-│   └── schema.sql       # SQL schema + seed data
-├── docs/
+│   └── schema.sql           # SQL schema reference
 ├── screenshots/
 ├── README.md
-├── requirements.txt
-└── .gitignore
+└── requirements.txt
 ```
 
 ---
 
 ## Setup & Installation
 
-### 1. Backend Setup
+### Prerequisites
+- Python 3.9+
 
-**Prerequisites:** Python 3.9+
+### 1. Backend Setup
 
 ```bash
 cd backend
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-The API will be available at: `http://127.0.0.1:8000`
+The API will be available at: `http://127.0.0.1:8000`  
 Interactive docs: `http://127.0.0.1:8000/docs`
 
 ### 2. Frontend Setup
 
-No build step required. Open `frontend/index.html` directly in a browser (Chrome, Edge, Firefox).
+No build step required. Open `frontend/index.html` directly in a browser, or serve it:
 
-> **Note:** For CORS to work, open the file through a local server or just double-click `index.html`. The frontend connects to `http://127.0.0.1:8000`.
-
-Optional — serve with Python's built-in server:
 ```bash
 cd frontend
 python -m http.server 3000
@@ -83,7 +95,47 @@ python -m http.server 3000
 
 ---
 
+## ETL Workflow
+
+```
+datasets/feedback_sample.csv
+        │
+        ▼  EXTRACT
+   Read CSV/Excel into DataFrame
+        │
+        ▼  TRANSFORM
+   • Flexible column mapping (aliases supported)
+   • Strip whitespace / title-case participant names
+   • Validate ratings: must be integer 1–5
+   • Remove within-file duplicates (same name + program + rating)
+   • Drop rows with missing participant_name or program_name
+        │
+        ▼  LOAD
+   • Insert cleaned records → feedback table
+   • Compute per-program stats → feedback_analytics table
+   • Record job metadata → etl_jobs table
+        │
+        ▼
+   Analytics APIs + Downloadable Report
+```
+
+### Supported Column Names
+
+The ETL service accepts common column name variants:
+
+| Canonical Field    | Accepted Aliases |
+|--------------------|-----------------|
+| participant_name   | participant, name, attendee, student, employee |
+| program_name       | program, event, course, training, workshop |
+| rating             | score, stars, grade, feedback_score |
+| comments           | comment, feedback, notes, review |
+| submitted_date     | date, submitted_at, submission_date |
+
+---
+
 ## API Endpoints
+
+### Phase 1 — Feedback CRUD
 
 | Method | Endpoint            | Description              |
 |--------|---------------------|--------------------------|
@@ -95,37 +147,37 @@ python -m http.server 3000
 | GET    | /feedback/stats     | Dashboard stats          |
 | GET    | /search             | Search & filter          |
 
-### Example: Submit Feedback
+### Phase 2 — ETL & Analytics
 
-**POST** `/feedback`
-```json
-{
-  "participant_name": "Alice Johnson",
-  "program_name": "React Workshop 2025",
-  "rating": 5,
-  "comments": "Excellent hands-on sessions!"
-}
+| Method | Endpoint                    | Description                          |
+|--------|-----------------------------|--------------------------------------|
+| POST   | /etl/upload                 | Upload CSV/Excel and run ETL         |
+| GET    | /etl/jobs                   | List all ETL job history             |
+| GET    | /etl/jobs/{id}              | Get specific ETL job details         |
+| GET    | /etl/analytics              | Overall analytics summary            |
+| GET    | /etl/analytics/by-program   | Per-program analytics breakdown      |
+| GET    | /etl/report/download        | Download analytics as CSV            |
+
+### Example: Run ETL via API
+
+```bash
+curl -X POST http://127.0.0.1:8000/etl/upload \
+  -F "file=@datasets/feedback_sample.csv"
 ```
 
 **Response 201:**
 ```json
 {
-  "feedback_id": 1,
-  "participant_name": "Alice Johnson",
-  "program_name": "React Workshop 2025",
-  "rating": 5,
-  "comments": "Excellent hands-on sessions!",
-  "submitted_at": "2026-05-14T10:30:00"
+  "job_id": 1,
+  "filename": "feedback_sample.csv",
+  "status": "completed",
+  "total_records": 135,
+  "valid_records": 115,
+  "duplicate_records": 10,
+  "invalid_records": 10,
+  "loaded_records": 115,
+  "completed_at": "2026-05-22T10:30:00"
 }
-```
-
-### Search Examples
-
-```
-GET /search?keyword=react
-GET /search?rating=5
-GET /search?program_name=workshop
-GET /search?keyword=training&rating=4
 ```
 
 ---
@@ -146,36 +198,21 @@ GET /search?keyword=training&rating=4
 
 SQLite database file `feedback.db` is auto-created inside `backend/` on first run.
 
-To seed sample data:
-```bash
-cd backend
-python -c "
-from database import SessionLocal, engine
-import models
-models.Base.metadata.create_all(bind=engine)
-from crud import create_feedback
-from schemas import FeedbackCreate
-db = SessionLocal()
-samples = [
-  FeedbackCreate(participant_name='Alice', program_name='React Workshop', rating=5, comments='Great!'),
-  FeedbackCreate(participant_name='Bob', program_name='Python Training', rating=4, comments='Very useful'),
-]
-for s in samples:
-    create_feedback(db, s)
-db.close()
-print('Seeded!')
-"
-```
+**Tables:**
+- `feedback` — all submitted and ETL-imported feedback records
+- `etl_jobs` — ETL pipeline execution history (status, record counts, timestamps)
+- `feedback_analytics` — per-program analytics computed from each ETL run
 
 ---
-**Dashboard screenshot**
-<img width="1914" height="845" alt="image" src="https://github.com/user-attachments/assets/c8a199d5-5fb0-4ba4-a9f6-bbf0f67282a1" />
-**Feedback screenshot**
-<img width="1859" height="860" alt="image (1)" src="https://github.com/user-attachments/assets/e2ed0a2d-29be-4886-b3f0-839280a04ed7" />
-**API Testing screenshot**
-<img width="1789" height="834" alt="image (2)" src="https://github.com/user-attachments/assets/2731eb7a-ac96-4b6f-8373-96524c7ef0c7" />
 
+## Sample Dataset
 
+`datasets/feedback_sample.csv` contains 130+ rows with:
+- 10 training programs, ~12 responses each
+- Intentional dirty data: duplicate rows, out-of-range ratings (0, 6), non-numeric ratings ("N/A"), and rows with missing required fields
+- Demonstrates the full Extract → Transform → Load cleaning pipeline
+
+---
 
 ## GitHub Repository Naming
 
@@ -183,5 +220,3 @@ Follows the convention:
 ```
 AFDE_May26_Aravind_FMS
 ```
-
----

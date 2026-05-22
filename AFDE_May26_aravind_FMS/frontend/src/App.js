@@ -1,7 +1,7 @@
-const { useState, useEffect, useCallback } = React;
+const { useState, useEffect, useCallback, useRef } = React;
 
 // ─── API Service ─────────────────────────────────────────────────────────────
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "http://127.0.0.1:8080";
 
 const api = {
   getFeedback: () => axios.get(`${API_BASE}/feedback`),
@@ -11,6 +11,11 @@ const api = {
   deleteFeedback: (id) => axios.delete(`${API_BASE}/feedback/${id}`),
   search: (params) => axios.get(`${API_BASE}/search`, { params }),
   getStats: () => axios.get(`${API_BASE}/feedback/stats`),
+  // Phase 2 – ETL
+  uploadETL: (formData) => axios.post(`${API_BASE}/etl/upload`, formData, { headers: { "Content-Type": "multipart/form-data" } }),
+  getETLJobs: () => axios.get(`${API_BASE}/etl/jobs`),
+  getOverallAnalytics: () => axios.get(`${API_BASE}/etl/analytics`),
+  getAnalyticsByProgram: () => axios.get(`${API_BASE}/etl/analytics/by-program`),
 };
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -546,6 +551,334 @@ function FeedbackList() {
   );
 }
 
+// ─── Import Data Page (Phase 2) ───────────────────────────────────────────────
+function ImportData() {
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [alert, setAlert] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [loadingJobs, setLoadingJobs] = useState(true);
+  const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const loadJobs = useCallback(() => {
+    api.getETLJobs()
+      .then((r) => { setJobs(r.data); setLoadingJobs(false); })
+      .catch(() => setLoadingJobs(false));
+  }, []);
+
+  useEffect(() => { loadJobs(); }, [loadJobs]);
+
+  const handleFileChange = (e) => {
+    const f = e.target.files[0];
+    if (f) { setFile(f); setResult(null); setAlert(null); }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const f = e.dataTransfer.files[0];
+    if (f) { setFile(f); setResult(null); setAlert(null); }
+  };
+
+  const handleUpload = async () => {
+    if (!file) { setAlert({ type: "error", message: "Please select a CSV or Excel file first." }); return; }
+    setLoading(true);
+    setAlert(null);
+    setResult(null);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const r = await api.uploadETL(fd);
+      setResult(r.data);
+      setAlert({ type: "success", message: `ETL completed — ${r.data.loaded_records} records loaded successfully.` });
+      setFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      loadJobs();
+    } catch (err) {
+      const msg = err.response?.data?.detail || "ETL pipeline failed. Check file format and column names.";
+      setAlert({ type: "error", message: typeof msg === "string" ? msg : JSON.stringify(msg) });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatDate = (d) => new Date(d).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+
+  const StatusBadge = ({ status }) => {
+    const colors = { completed: "var(--success)", failed: "var(--danger)", running: "var(--warning)" };
+    return (
+      <span style={{ color: colors[status] || "var(--text-muted)", fontWeight: 600, fontSize: "0.82rem", textTransform: "capitalize" }}>
+        {status === "completed" ? "✓ " : status === "failed" ? "✕ " : "⟳ "}{status}
+      </span>
+    );
+  };
+
+  return (
+    <div>
+      <div className="page-header">
+        <h2>Import Feedback Data</h2>
+        <p>Upload a CSV or Excel file to run the ETL pipeline and load feedback into the system</p>
+      </div>
+
+      {alert && <Alert type={alert.type} message={alert.message} onClose={() => setAlert(null)} />}
+
+      {/* Upload card */}
+      <div className="card" style={{ maxWidth: 640, marginBottom: 24 }}>
+        <h3 style={{ fontSize: "0.95rem", fontWeight: 600, marginBottom: 16 }}>Upload File</h3>
+
+        <div
+          className={`drop-zone${dragOver ? " drag-over" : ""}`}
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current && fileInputRef.current.click()}
+        >
+          <div style={{ fontSize: "2rem", marginBottom: 8 }}>📂</div>
+          {file
+            ? <p style={{ fontWeight: 600, color: "var(--primary)" }}>{file.name}</p>
+            : <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>Drag & drop a CSV or Excel file here, or click to browse</p>}
+          <p style={{ fontSize: "0.78rem", color: "var(--text-muted)", marginTop: 4 }}>Supported: .csv, .xlsx, .xls</p>
+        </div>
+
+        <input ref={fileInputRef} type="file" accept=".csv,.xlsx,.xls" style={{ display: "none" }} onChange={handleFileChange} />
+
+        <div style={{ marginTop: 14, display: "flex", gap: 10, alignItems: "center" }}>
+          <button className="btn btn-primary" onClick={handleUpload} disabled={loading || !file}>
+            {loading ? <><Spinner /> Running ETL...</> : "Run ETL Pipeline"}
+          </button>
+          {file && <button className="btn btn-ghost" onClick={() => { setFile(null); if (fileInputRef.current) fileInputRef.current.value = ""; }}>Clear</button>}
+        </div>
+
+        <p style={{ fontSize: "0.78rem", color: "var(--text-muted)", marginTop: 10 }}>
+          Expected columns: <code>participant_name</code>, <code>program_name</code>, <code>rating</code>, <code>comments</code> (optional), <code>submitted_date</code> (optional)
+        </p>
+      </div>
+
+      {/* ETL Result Summary */}
+      {result && (
+        <div className="card" style={{ maxWidth: 640, marginBottom: 24 }}>
+          <h3 style={{ fontSize: "0.95rem", fontWeight: 600, marginBottom: 16 }}>Pipeline Results — Job #{result.job_id}</h3>
+          <div className="stat-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))" }}>
+            {[
+              { label: "Total Records", value: result.total_records, color: "var(--text)" },
+              { label: "Valid Records", value: result.valid_records, color: "var(--primary)" },
+              { label: "Duplicates Removed", value: result.duplicate_records, color: "var(--warning)" },
+              { label: "Invalid Removed", value: result.invalid_records, color: "var(--danger)" },
+              { label: "Loaded", value: result.loaded_records, color: "var(--success)" },
+            ].map(({ label, value, color }) => (
+              <div key={label} className="stat-card" style={{ textAlign: "center" }}>
+                <div className="stat-label" style={{ fontSize: "0.72rem" }}>{label}</div>
+                <div className="stat-value" style={{ color, fontSize: "1.6rem" }}>{value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Job History */}
+      <div className="card">
+        <h3 style={{ fontSize: "0.95rem", fontWeight: 600, marginBottom: 16 }}>Import History</h3>
+        {loadingJobs ? (
+          <div className="loading-center"><Spinner /></div>
+        ) : jobs.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">📭</div>
+            <p>No ETL jobs run yet. Upload a file above to get started.</p>
+          </div>
+        ) : (
+          <table className="feedback-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>File</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Loaded</th>
+                <th>Run At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {jobs.map((j) => (
+                <tr key={j.job_id}>
+                  <td style={{ color: "var(--text-muted)", fontSize: "0.82rem" }}>#{j.job_id}</td>
+                  <td style={{ fontWeight: 500, fontSize: "0.85rem" }}>{j.filename}</td>
+                  <td><StatusBadge status={j.status} /></td>
+                  <td>{j.total_records}</td>
+                  <td style={{ color: "var(--success)", fontWeight: 600 }}>{j.loaded_records}</td>
+                  <td style={{ color: "var(--text-muted)", fontSize: "0.82rem", whiteSpace: "nowrap" }}>{formatDate(j.created_at)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Analytics Page (Phase 2) ─────────────────────────────────────────────────
+function Analytics() {
+  const [overview, setOverview] = useState(null);
+  const [programs, setPrograms] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    Promise.all([api.getOverallAnalytics(), api.getAnalyticsByProgram()])
+      .then(([ov, pr]) => { setOverview(ov.data); setPrograms(pr.data); })
+      .catch(() => setError("Could not load analytics. Is the backend running and has data been imported?"));
+  }, []);
+
+  const handleDownload = () => {
+    window.location.href = `${API_BASE}/etl/report/download`;
+  };
+
+  const RatingBar = ({ count, total, color }) => {
+    const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "0.78rem" }}>
+        <div style={{ flex: 1, height: 8, background: "var(--border)", borderRadius: 4, overflow: "hidden" }}>
+          <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 4, transition: "width .3s" }} />
+        </div>
+        <span style={{ minWidth: 28, color: "var(--text-muted)" }}>{pct}%</span>
+      </div>
+    );
+  };
+
+  const RATING_COLORS = { 1: "#dc2626", 2: "#d97706", 3: "#ca8a04", 4: "#059669", 5: "#2563eb" };
+
+  return (
+    <div>
+      <div className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12 }}>
+        <div>
+          <h2>Analytics Dashboard</h2>
+          <p>Summary analytics generated from all feedback (manual + ETL imports)</p>
+        </div>
+        <button className="btn btn-primary btn-sm" onClick={handleDownload} style={{ whiteSpace: "nowrap" }}>
+          ↓ Download Report CSV
+        </button>
+      </div>
+
+      {error && <Alert type="error" message={error} />}
+
+      {!overview ? (
+        <div className="loading-center"><Spinner /></div>
+      ) : (
+        <>
+          {/* Overview stats */}
+          <div className="stat-grid" style={{ marginBottom: 24 }}>
+            <div className="stat-card">
+              <div className="stat-label">Total Feedback</div>
+              <div className="stat-value">{overview.total_feedback}</div>
+              <div className="stat-sub">All records in system</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Average Rating</div>
+              <div className="stat-value">{overview.average_rating > 0 ? overview.average_rating.toFixed(1) : "—"}</div>
+              <div className="stat-sub">Out of 5.0</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">Programs Tracked</div>
+              <div className="stat-value">{overview.total_programs}</div>
+              <div className="stat-sub">Unique programs / events</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-label">ETL Imports Run</div>
+              <div className="stat-value" style={{ color: "var(--primary)" }}>{overview.total_etl_jobs}</div>
+              <div className="stat-sub">Total pipeline executions</div>
+            </div>
+          </div>
+
+          {/* Rating distribution */}
+          <div className="card" style={{ marginBottom: 24 }}>
+            <h3 style={{ fontSize: "0.95rem", fontWeight: 600, marginBottom: 16 }}>Overall Rating Distribution</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, maxWidth: 480 }}>
+              {[5, 4, 3, 2, 1].map((r) => {
+                const count = overview.rating_distribution[`rating_${r}`] || 0;
+                return (
+                  <div key={r} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                    <span style={{ minWidth: 100, fontSize: "0.82rem", fontWeight: 500 }}>
+                      <span style={{ color: RATING_COLORS[r] }}>{"★".repeat(r)}</span> {RATING_LABELS[r]}
+                    </span>
+                    <div style={{ flex: 1 }}>
+                      <RatingBar count={count} total={overview.total_feedback} color={RATING_COLORS[r]} />
+                    </div>
+                    <span style={{ minWidth: 32, fontSize: "0.82rem", color: "var(--text-muted)", textAlign: "right" }}>{count}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Per-program analytics table */}
+          <div className="card">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <h3 style={{ fontSize: "0.95rem", fontWeight: 600 }}>Analytics by Program</h3>
+              <span style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}>{programs.length} program(s)</span>
+            </div>
+            {programs.length === 0 ? (
+              <div className="empty-state">
+                <div className="empty-icon">📭</div>
+                <p>No analytics data yet. Submit feedback or run an ETL import first.</p>
+              </div>
+            ) : (
+              <div style={{ overflowX: "auto" }}>
+                <table className="feedback-table">
+                  <thead>
+                    <tr>
+                      <th>Program / Event</th>
+                      <th style={{ textAlign: "center" }}>Responses</th>
+                      <th style={{ textAlign: "center" }}>Avg Rating</th>
+                      <th style={{ minWidth: 220 }}>Rating Distribution</th>
+                      <th style={{ textAlign: "center" }}>Excellent %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {programs.map((p) => {
+                      const excellent = Math.round((p.rating_5_count / p.total_responses) * 100);
+                      return (
+                        <tr key={p.program_name}>
+                          <td style={{ fontWeight: 500 }}><span className="tag">{p.program_name}</span></td>
+                          <td style={{ textAlign: "center" }}>{p.total_responses}</td>
+                          <td style={{ textAlign: "center" }}>
+                            <span style={{ color: p.avg_rating >= 4 ? "var(--success)" : p.avg_rating >= 3 ? "var(--warning)" : "var(--danger)", fontWeight: 700 }}>
+                              {p.avg_rating.toFixed(1)}
+                            </span>
+                          </td>
+                          <td>
+                            <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                              {[1, 2, 3, 4, 5].map((r) => {
+                                const cnt = p[`rating_${r}_count`];
+                                const pct = Math.round((cnt / p.total_responses) * 100);
+                                return (
+                                  <div key={r} title={`${RATING_LABELS[r]}: ${cnt}`} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 28 }}>
+                                    <div style={{ width: 18, height: Math.max(4, pct * 0.6), background: RATING_COLORS[r], borderRadius: 2, transition: "height .3s" }} />
+                                    <span style={{ fontSize: "0.65rem", color: "var(--text-muted)" }}>{r}★</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            <span style={{ color: excellent >= 50 ? "var(--success)" : excellent >= 25 ? "var(--warning)" : "var(--danger)", fontWeight: 600, fontSize: "0.9rem" }}>
+                              {excellent}%
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 // ─── App Shell ────────────────────────────────────────────────────────────────
 function App() {
   const [page, setPage] = useState("dashboard");
@@ -554,12 +887,16 @@ function App() {
     { id: "dashboard", label: "Dashboard", icon: "📊" },
     { id: "submit", label: "Submit Feedback", icon: "✍️" },
     { id: "list", label: "All Feedback", icon: "📋" },
+    { id: "import", label: "Import Data", icon: "⬆️" },
+    { id: "analytics", label: "Analytics", icon: "📈" },
   ];
 
   const renderPage = () => {
     if (page === "dashboard") return <Dashboard onNavigate={setPage} />;
     if (page === "submit") return <SubmitFeedback />;
     if (page === "list") return <FeedbackList />;
+    if (page === "import") return <ImportData />;
+    if (page === "analytics") return <Analytics />;
     return null;
   };
 
@@ -582,6 +919,9 @@ function App() {
             </div>
           ))}
         </nav>
+        <div style={{ padding: "12px 16px", borderTop: "1px solid var(--border)", fontSize: "0.7rem", color: "var(--text-muted)" }}>
+          Phase 2 — ETL Pipeline
+        </div>
       </aside>
       <main className="main-content">
         {renderPage()}
