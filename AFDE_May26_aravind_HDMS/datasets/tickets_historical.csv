@@ -1,0 +1,231 @@
+ticket_id,employee_name,department,issue_category,description,priority,status,created_at,resolved_at
+1,Uma Lewis,IT,VPN Issue,VPN client disconnects every 30 minutes,High,In Progress,2026-01-13 00:00:00,
+2,David Brown,Operations,Email Access,Distribution list access required for project team,High,Open,2025-01-17 00:00:00,
+3,Alice Johnson,IT,VPN Issue,Unable to access internal resources through VPN,Low,Resolved,2025-04-12 00:00:00,2025-04-24 00:00:00
+4,Uma Lewis,IT,Email Access,"Email storage quota exceeded, cannot receive mail",Medium,Resolved,2026-02-19 00:00:00,2026-03-05 00:00:00
+5,Alice Johnson,IT,Network Connectivity,Shared network drive not accessible from remote,Low,Resolved,2025-03-21 00:00:00,2025-03-25 00:00:00
+6,Yara Allen,Marketing,Password Reset,Password expired and self-service reset not working,Low,Open,2025-11-06 00:00:00,
+7,Isabella Anderson,Customer Service,Network Connectivity,Network printer not discovered on local network,High,Resolved,2025-02-10 00:00:00,2025-02-19 00:00:00
+8,James Thomas,Management,Network Connectivity,Intermittent connection drops affecting video calls,Medium,Closed,2025-04-09 00:00:00,2025-04-21 00:00:00
+9,Carol Williams,Finance,VPN Issue,Cannot connect to VPN from home office,Low,In Progress,2026-03-14 00:00:00,
+10,Henry Taylor,Legal,Network Connectivity,Shared network drive not accessible from remote,Medium,Resolved,2025-03-25 00:00:00,2025-03-31 00:00:00
+11,Liam White,HR,Password Reset,Account locked after multiple failed login attempts,Low,Closed,2025-11-08 00:00:00,2025-11-19 00:00:00
+12,Frank Wilson,Sales,Laptop Issue,Keyboard keys intermittently not responding,Low,Resolved,2026-04-19 00:00:00,2026-04-30 00:00:00
+13,Wendy Walker,Finance,Laptop Issue,Laptop not booting up after Windows update,Medium,Closed,2025-04-28 00:00:00,2025-05-12 00:00:00
+14,Bob Smith,HR,Network Connectivity,Intermittent connection drops affecting video calls,Medium,Open,2026-03-25 00:00:00,
+15,Wendy Walker,Finance,Password Reset,New employee needs initial password configured,Medium,In Progress,2025-03-15 00:00:00,
+16,Isabella Anderson,Customer Service,VPN Issue,Unable to access internal resources through VPN,High,Resolved,2025-08-08 00:00:00,2025-08-18 00:00:00
+17,Mia Harris,Finance,Software Installation,AutoCAD license needed for design work,Critical,Open,2025-02-16 00:00:00,
+18,Yara Allen,Marketing,VPN Issue,VPN client requires update to latest version,Low,Resolved,2025-11-02 00:00:00,2025-11-04 00:00:00
+19,Mia Harris,Finance,Software Installation,Python development environment setup required,Critical,Resolved,2026-03-17 00:00:00,2026-03-18 00:00:00
+20,Victor Lee,HR,Email Access,"Email storage quota exceeded, cannot receive mail",Medium,Resolved,2026-01-29 00:00:00,2026-02-09 00:00:00
+21,Karen Jackson,IT,VPN Issue,VPN credentials not accepted after password change,Medium,Resolved,2026-05-13 00:00:00,2026-05-22 00:00:00
+22,Yara Allen,Marketing,Password Reset,Password expired and self-service reset not working,Critical,Closed,2026-03-07 00:00:00,2026-03-18 00:00:00
+23,Quinn Martinez,Engineering,Laptop Issue,Laptop overheating and shutting down unexpectedly,Low,Closed,2026-05-04 00:00:00,2026-05-17 00:00:00
+24,Derek Scott,Management,Laptop Issue,Laptop not booting up after Windows update,Low,In Progress,2025-02-27 00:00:00,
+25,Derek Scott,Management,Software Installation,Need Adobe Acrobat Reader for PDF forms,Critical,Closed,2025-01-30 00:00:00,2025-02-03 00:00:00
+26,Cathy Wright,Customer Service,Laptop Issue,Laptop not booting up after Windows update,Low,Closed,2026-01-25 00:00:00,2026-02-03 00:00:00
+27,Yara Allen,Marketing,VPN Issue,VPN client disconnects every 30 minutes,Medium,Closed,2025-05-16 00:00:00,2025-05-25 00:00:00
+28,Brian King,Legal,Laptop Issue,Screen flickering and display artifacts present,Critical,Closed,2026-01-01 00:00:00,2026-01-06 00:00:00
+29,Mia Harris,Finance,Other,Request for IT support for offsite team event,Medium,Resolved,2025-08-20 00:00:00,2025-08-22 00:00:00
+30,Henry Taylor,Legal,Password Reset,Forgot password for company email account,Medium,Resolved,2025-10-29 00:00:00,2025-11-02 00:00:00
+31,Alice Johnson,IT,VPN Issue,Cannot connect to VPN from home office,Medium,In Progress,2026-03-17 00:00:00,
+32,Karen Jackson,IT,VPN Issue,VPN client disconnects every 30 minutes,Low,Resolved,2025-10-04 00:00:00,2025-10-07 00:00:00
+33,Xavier Hall,Operations,Hardware Request,Headset required for customer service calls,Medium,Resolved,2026-02-18 00:00:00,2026-02-25 00:00:00
+34,Grace Moore,Engineering,VPN Issue,VPN client requires update to latest version,Medium,In Progress,2025-08-28 00:00:00,
+35,Brian King,Legal,Email Access,Cannot send emails to external recipients,Medium,Closed,2025-02-01 00:00:00,2025-02-08 00:00:00
+36,Xavier Hall,Operations,Password Reset,Forgot password for company email account,High,In Progress,2025-10-02 00:00:00,
+37,Olivia Thompson,Marketing,VPN Issue,Cannot connect to VPN from home office,Low,Resolved,2025-08-15 00:00:00,2025-08-28 00:00:00
+38,Brian King,Legal,Network Connectivity,Intermittent connection drops affecting video calls,Low,Resolved,2026-03-05 00:00:00,2026-03-06 00:00:00
+39,Carol Williams,Finance,Hardware Request,Headset required for customer service calls,High,Open,2025-09-04 00:00:00,
+40,Grace Moore,Engineering,Network Connectivity,Cannot connect to office WiFi on floor 3,Critical,Open,2025-07-19 00:00:00,
+41,Isabella Anderson,Customer Service,Hardware Request,Ergonomic mouse requested due to wrist strain,High,In Progress,2025-12-05 00:00:00,
+42,Wendy Walker,Finance,Software Installation,Microsoft Office 365 not installed on new laptop,Low,In Progress,2025-10-24 00:00:00,
+43,Xavier Hall,Operations,Laptop Issue,Laptop overheating and shutting down unexpectedly,High,Open,2025-09-02 00:00:00,
+44,Quinn Martinez,Engineering,Hardware Request,Ergonomic mouse requested due to wrist strain,Medium,Open,2025-02-11 00:00:00,
+45,Brian King,Legal,Password Reset,Forgot password for company email account,Medium,Resolved,2025-07-26 00:00:00,2025-07-28 00:00:00
+46,Cathy Wright,Customer Service,Laptop Issue,Laptop not booting up after Windows update,Medium,Open,2025-08-03 00:00:00,
+47,Victor Lee,HR,Laptop Issue,Screen flickering and display artifacts present,Medium,Closed,2025-12-09 00:00:00,2025-12-21 00:00:00
+48,Karen Jackson,IT,Password Reset,Password expired and self-service reset not working,Medium,Resolved,2025-08-23 00:00:00,2025-08-29 00:00:00
+49,Derek Scott,Management,Network Connectivity,Intermittent connection drops affecting video calls,Low,Resolved,2025-02-21 00:00:00,2025-02-23 00:00:00
+50,Rachel Robinson,Legal,Password Reset,Account locked after multiple failed login attempts,Low,Closed,2026-03-27 00:00:00,2026-03-31 00:00:00
+51,Liam White,HR,Password Reset,Password expired and self-service reset not working,Medium,Resolved,2025-11-10 00:00:00,2025-11-23 00:00:00
+52,Uma Lewis,IT,Laptop Issue,Laptop not booting up after Windows update,Medium,Resolved,2026-04-26 00:00:00,2026-04-29 00:00:00
+53,Isabella Anderson,Customer Service,VPN Issue,VPN credentials not accepted after password change,Low,Resolved,2025-05-25 00:00:00,2025-06-04 00:00:00
+54,Grace Moore,Engineering,Email Access,"Email storage quota exceeded, cannot receive mail",Low,Resolved,2025-09-16 00:00:00,2025-09-24 00:00:00
+55,Isabella Anderson,Customer Service,Hardware Request,Headset required for customer service calls,High,Open,2026-03-01 00:00:00,
+56,Isabella Anderson,Customer Service,VPN Issue,VPN credentials not accepted after password change,Medium,Open,2025-03-24 00:00:00,
+57,Xavier Hall,Operations,Software Installation,Microsoft Office 365 not installed on new laptop,High,Resolved,2025-02-08 00:00:00,2025-02-20 00:00:00
+58,Cathy Wright,Customer Service,VPN Issue,Unable to access internal resources through VPN,Low,In Progress,2025-03-17 00:00:00,
+59,Noah Martin,Operations,VPN Issue,Cannot connect to VPN from home office,Medium,Closed,2026-04-06 00:00:00,2026-04-12 00:00:00
+60,Grace Moore,Engineering,Email Access,Email signature not displaying correctly in Outlook,Medium,In Progress,2026-03-29 00:00:00,
+61,Brian King,Legal,Software Installation,Need Adobe Acrobat Reader for PDF forms,Medium,Open,2026-03-19 00:00:00,
+62,Frank Wilson,Sales,Other,Software license transfer from departing employee,High,Closed,2025-04-02 00:00:00,2025-04-14 00:00:00
+63,Derek Scott,Management,Password Reset,Forgot password for company email account,Critical,Closed,2025-05-17 00:00:00,2025-05-20 00:00:00
+64,Zachary Young,Sales,Email Access,Distribution list access required for project team,Medium,Open,2025-04-24 00:00:00,
+65,Grace Moore,Engineering,Network Connectivity,Internet connection very slow at workstation,Medium,In Progress,2025-04-25 00:00:00,
+66,Alice Johnson,IT,Email Access,Cannot send emails to external recipients,Medium,In Progress,2026-05-11 00:00:00,
+67,Yara Allen,Marketing,Password Reset,SSO password sync issue after domain change,Medium,In Progress,2025-06-19 00:00:00,
+68,Alice Johnson,IT,VPN Issue,VPN credentials not accepted after password change,Critical,Open,2025-01-20 00:00:00,
+69,David Brown,Operations,Laptop Issue,"Battery draining too fast, less than 2 hours",Medium,Closed,2025-11-07 00:00:00,2025-11-16 00:00:00
+70,David Brown,Operations,Software Installation,AutoCAD license needed for design work,Medium,In Progress,2025-01-01 00:00:00,
+71,Quinn Martinez,Engineering,Hardware Request,New wireless keyboard and mouse needed,Medium,Closed,2025-07-06 00:00:00,2025-07-13 00:00:00
+72,Carol Williams,Finance,Hardware Request,Request for external 27-inch monitor for dual setup,Critical,Resolved,2026-01-04 00:00:00,2026-01-09 00:00:00
+73,Quinn Martinez,Engineering,Password Reset,Password expired and self-service reset not working,Medium,Resolved,2025-10-11 00:00:00,2025-10-14 00:00:00
+74,Grace Moore,Engineering,Software Installation,Need Adobe Acrobat Reader for PDF forms,Critical,Resolved,2025-11-12 00:00:00,2025-11-22 00:00:00
+75,James Thomas,Management,Software Installation,Need Adobe Acrobat Reader for PDF forms,High,In Progress,2025-08-09 00:00:00,
+76,Zachary Young,Sales,Laptop Issue,"Battery draining too fast, less than 2 hours",Medium,Resolved,2025-12-12 00:00:00,2025-12-16 00:00:00
+77,Quinn Martinez,Engineering,Software Installation,Need Adobe Acrobat Reader for PDF forms,Critical,Closed,2025-12-04 00:00:00,2025-12-06 00:00:00
+78,James Thomas,Management,Laptop Issue,Screen flickering and display artifacts present,Medium,In Progress,2025-12-11 00:00:00,
+79,James Thomas,Management,Password Reset,Forgot password for company email account,Low,Open,2025-09-01 00:00:00,
+80,Tina Rodriguez,Management,Network Connectivity,Intermittent connection drops affecting video calls,Low,Resolved,2025-04-10 00:00:00,2025-04-22 00:00:00
+81,Wendy Walker,Finance,Software Installation,Microsoft Office 365 not installed on new laptop,Medium,Open,2026-04-03 00:00:00,
+82,Yara Allen,Marketing,Network Connectivity,Internet connection very slow at workstation,High,Closed,2025-04-01 00:00:00,2025-04-14 00:00:00
+83,Wendy Walker,Finance,Laptop Issue,Laptop not booting up after Windows update,Low,In Progress,2025-08-22 00:00:00,
+84,Emma Davis,Marketing,Network Connectivity,Intermittent connection drops affecting video calls,Medium,Closed,2025-06-12 00:00:00,2025-06-25 00:00:00
+85,Cathy Wright,Customer Service,Software Installation,AutoCAD license needed for design work,High,Closed,2026-03-02 00:00:00,2026-03-11 00:00:00
+86,Olivia Thompson,Marketing,Hardware Request,USB-C docking station required for laptop,High,Resolved,2026-01-20 00:00:00,2026-01-24 00:00:00
+87,Amy Hernandez,Engineering,Email Access,Outlook not syncing new messages since Monday,High,Resolved,2025-05-21 00:00:00,2025-05-29 00:00:00
+88,Carol Williams,Finance,Email Access,Email signature not displaying correctly in Outlook,Low,In Progress,2025-02-11 00:00:00,
+89,Emma Davis,Marketing,Password Reset,Forgot password for company email account,Medium,Open,2025-02-02 00:00:00,
+90,Noah Martin,Operations,Software Installation,Need Adobe Acrobat Reader for PDF forms,Medium,Resolved,2026-03-03 00:00:00,2026-03-10 00:00:00
+91,Mia Harris,Finance,Hardware Request,Ergonomic mouse requested due to wrist strain,Medium,Resolved,2025-07-14 00:00:00,2025-07-22 00:00:00
+92,Alice Johnson,IT,Hardware Request,Headset required for customer service calls,Low,In Progress,2025-10-03 00:00:00,
+93,Xavier Hall,Operations,Email Access,Distribution list access required for project team,High,Closed,2025-04-23 00:00:00,2025-04-28 00:00:00
+94,Noah Martin,Operations,Software Installation,AutoCAD license needed for design work,Medium,Resolved,2026-01-06 00:00:00,2026-01-09 00:00:00
+95,Amy Hernandez,Engineering,Software Installation,Microsoft Office 365 not installed on new laptop,Low,Resolved,2026-04-10 00:00:00,2026-04-17 00:00:00
+96,Samuel Clark,Customer Service,Laptop Issue,Screen flickering and display artifacts present,Low,Resolved,2026-03-20 00:00:00,2026-03-28 00:00:00
+97,Frank Wilson,Sales,VPN Issue,VPN credentials not accepted after password change,Medium,In Progress,2025-06-22 00:00:00,
+98,Yara Allen,Marketing,Hardware Request,Headset required for customer service calls,Low,Closed,2025-05-10 00:00:00,2025-05-24 00:00:00
+99,Carol Williams,Finance,Software Installation,Request to install Slack desktop application,High,Open,2025-04-25 00:00:00,
+100,Uma Lewis,IT,VPN Issue,Cannot connect to VPN from home office,Critical,Open,2026-05-02 00:00:00,
+101,Henry Taylor,Legal,Password Reset,Forgot password for company email account,Low,Open,2025-08-31 00:00:00,
+102,Victor Lee,HR,VPN Issue,VPN credentials not accepted after password change,Critical,Resolved,2026-01-28 00:00:00,2026-02-03 00:00:00
+103,Frank Wilson,Sales,Laptop Issue,Screen flickering and display artifacts present,Critical,Closed,2026-05-09 00:00:00,2026-05-14 00:00:00
+104,David Brown,Operations,Laptop Issue,"Battery draining too fast, less than 2 hours",Critical,Resolved,2025-07-23 00:00:00,2025-08-04 00:00:00
+105,Grace Moore,Engineering,VPN Issue,Cannot connect to VPN from home office,Medium,Resolved,2025-12-23 00:00:00,2026-01-05 00:00:00
+106,James Thomas,Management,Network Connectivity,Intermittent connection drops affecting video calls,Medium,Open,2026-02-05 00:00:00,
+107,Bob Smith,HR,Password Reset,SSO password sync issue after domain change,Medium,In Progress,2025-11-28 00:00:00,
+108,Karen Jackson,IT,VPN Issue,VPN client requires update to latest version,Medium,Resolved,2026-05-07 00:00:00,2026-05-13 00:00:00
+109,Uma Lewis,IT,Hardware Request,New wireless keyboard and mouse needed,Medium,Open,2026-01-11 00:00:00,
+110,Quinn Martinez,Engineering,Other,Request for IT support for offsite team event,Low,Closed,2026-02-01 00:00:00,2026-02-09 00:00:00
+111,Olivia Thompson,Marketing,Software Installation,Need Adobe Acrobat Reader for PDF forms,High,In Progress,2026-03-02 00:00:00,
+112,Derek Scott,Management,VPN Issue,VPN client requires update to latest version,High,In Progress,2025-10-19 00:00:00,
+113,Tina Rodriguez,Management,Email Access,"Email storage quota exceeded, cannot receive mail",Medium,Resolved,2025-04-04 00:00:00,2025-04-12 00:00:00
+114,Grace Moore,Engineering,Software Installation,Python development environment setup required,Low,In Progress,2025-12-26 00:00:00,
+115,Cathy Wright,Customer Service,Password Reset,Account locked after multiple failed login attempts,Low,Closed,2025-05-04 00:00:00,2025-05-16 00:00:00
+116,Noah Martin,Operations,Software Installation,AutoCAD license needed for design work,High,Resolved,2025-08-18 00:00:00,2025-08-31 00:00:00
+117,Alice Johnson,IT,VPN Issue,VPN credentials not accepted after password change,Low,Resolved,2025-12-06 00:00:00,2025-12-16 00:00:00
+118,Liam White,HR,Software Installation,Python development environment setup required,Medium,Resolved,2025-06-19 00:00:00,2025-06-25 00:00:00
+119,Wendy Walker,Finance,Software Installation,Need Adobe Acrobat Reader for PDF forms,Medium,In Progress,2025-06-11 00:00:00,
+120,David Brown,Operations,Email Access,Outlook not syncing new messages since Monday,Critical,Resolved,2025-04-21 00:00:00,2025-05-03 00:00:00
+121,Peter Garcia,Sales,Password Reset,SSO password sync issue after domain change,Medium,Closed,2025-05-25 00:00:00,2025-05-27 00:00:00
+122,Amy Hernandez,Engineering,Password Reset,Account locked after multiple failed login attempts,Low,Open,2025-12-29 00:00:00,
+123,Rachel Robinson,Legal,VPN Issue,VPN credentials not accepted after password change,Low,Open,2025-12-24 00:00:00,
+124,Emma Davis,Marketing,Email Access,Cannot send emails to external recipients,High,Open,2025-10-21 00:00:00,
+125,James Thomas,Management,Software Installation,Microsoft Office 365 not installed on new laptop,Medium,Open,2025-05-10 00:00:00,
+126,Brian King,Legal,Software Installation,Microsoft Office 365 not installed on new laptop,High,Resolved,2025-10-23 00:00:00,2025-11-03 00:00:00
+127,Victor Lee,HR,VPN Issue,VPN credentials not accepted after password change,Low,Resolved,2025-02-13 00:00:00,2025-02-17 00:00:00
+128,David Brown,Operations,Laptop Issue,Laptop overheating and shutting down unexpectedly,Medium,Resolved,2025-04-26 00:00:00,2025-05-09 00:00:00
+129,Quinn Martinez,Engineering,Software Installation,Python development environment setup required,Critical,In Progress,2025-08-08 00:00:00,
+130,James Thomas,Management,Laptop Issue,Laptop not booting up after Windows update,Low,Closed,2026-05-01 00:00:00,2026-05-14 00:00:00
+131,Grace Moore,Engineering,Email Access,Outlook not syncing new messages since Monday,Low,Open,2025-03-30 00:00:00,
+132,Rachel Robinson,Legal,VPN Issue,Unable to access internal resources through VPN,Low,Resolved,2025-08-29 00:00:00,2025-09-03 00:00:00
+133,Bob Smith,HR,Password Reset,New employee needs initial password configured,High,Closed,2025-02-06 00:00:00,2025-02-17 00:00:00
+134,Henry Taylor,Legal,Hardware Request,New wireless keyboard and mouse needed,High,Resolved,2025-08-06 00:00:00,2025-08-08 00:00:00
+135,Rachel Robinson,Legal,Password Reset,Forgot password for company email account,Low,In Progress,2025-02-06 00:00:00,
+136,Bob Smith,HR,Password Reset,SSO password sync issue after domain change,Medium,Closed,2026-04-17 00:00:00,2026-04-22 00:00:00
+137,Olivia Thompson,Marketing,VPN Issue,VPN credentials not accepted after password change,Medium,Resolved,2025-09-14 00:00:00,2025-09-23 00:00:00
+138,Peter Garcia,Sales,Software Installation,Request to install Slack desktop application,Medium,Closed,2025-11-06 00:00:00,2025-11-11 00:00:00
+139,Alice Johnson,IT,VPN Issue,Unable to access internal resources through VPN,Critical,Closed,2025-10-28 00:00:00,2025-10-29 00:00:00
+140,Yara Allen,Marketing,Email Access,Outlook not syncing new messages since Monday,Low,Open,2025-08-29 00:00:00,
+141,Quinn Martinez,Engineering,Email Access,Email signature not displaying correctly in Outlook,Critical,Open,2025-08-12 00:00:00,
+142,Uma Lewis,IT,Network Connectivity,Network printer not discovered on local network,Critical,Resolved,2025-06-20 00:00:00,2025-06-26 00:00:00
+143,Victor Lee,HR,VPN Issue,VPN client requires update to latest version,Low,Resolved,2025-05-28 00:00:00,2025-06-08 00:00:00
+144,Mia Harris,Finance,Network Connectivity,Shared network drive not accessible from remote,Medium,Resolved,2025-05-10 00:00:00,2025-05-16 00:00:00
+145,David Brown,Operations,Other,Software license transfer from departing employee,Medium,Resolved,2025-12-03 00:00:00,2025-12-17 00:00:00
+146,Rachel Robinson,Legal,Software Installation,Python development environment setup required,Low,Resolved,2026-01-23 00:00:00,2026-01-31 00:00:00
+147,Uma Lewis,IT,Software Installation,Need Adobe Acrobat Reader for PDF forms,Low,In Progress,2026-04-20 00:00:00,
+148,James Thomas,Management,Software Installation,Python development environment setup required,Medium,Open,2026-02-14 00:00:00,
+149,Henry Taylor,Legal,Email Access,Distribution list access required for project team,Medium,Open,2025-02-17 00:00:00,
+150,Henry Taylor,Legal,Other,Software license transfer from departing employee,Critical,Resolved,2025-11-28 00:00:00,2025-12-12 00:00:00
+151,Emma Davis,Marketing,Software Installation,Request to install Slack desktop application,High,Resolved,2025-08-01 00:00:00,2025-08-15 00:00:00
+152,Peter Garcia,Sales,Other,Backup job not completing successfully overnight,Low,Resolved,2025-04-08 00:00:00,2025-04-18 00:00:00
+153,Quinn Martinez,Engineering,Email Access,Distribution list access required for project team,Low,Open,2025-06-24 00:00:00,
+154,Derek Scott,Management,Network Connectivity,Shared network drive not accessible from remote,Low,Open,2026-03-05 00:00:00,
+155,Samuel Clark,Customer Service,Laptop Issue,"Battery draining too fast, less than 2 hours",Medium,Closed,2025-10-03 00:00:00,2025-10-11 00:00:00
+156,Liam White,HR,Password Reset,Password expired and self-service reset not working,High,In Progress,2026-03-22 00:00:00,
+157,Grace Moore,Engineering,Other,Backup job not completing successfully overnight,Low,In Progress,2025-01-23 00:00:00,
+158,Karen Jackson,IT,Email Access,Distribution list access required for project team,High,Closed,2025-12-06 00:00:00,2025-12-19 00:00:00
+159,Amy Hernandez,Engineering,Email Access,Outlook not syncing new messages since Monday,Low,Closed,2025-09-15 00:00:00,2025-09-25 00:00:00
+160,Karen Jackson,IT,Network Connectivity,Intermittent connection drops affecting video calls,High,Resolved,2026-04-12 00:00:00,2026-04-20 00:00:00
+161,Alice Johnson,IT,Email Access,Outlook not syncing new messages since Monday,Medium,Resolved,2025-02-08 00:00:00,2025-02-16 00:00:00
+162,Zachary Young,Sales,Other,Software license transfer from departing employee,Medium,Resolved,2026-03-13 00:00:00,2026-03-19 00:00:00
+163,Brian King,Legal,Email Access,Distribution list access required for project team,Medium,Closed,2026-03-23 00:00:00,2026-04-01 00:00:00
+164,Bob Smith,HR,Laptop Issue,Keyboard keys intermittently not responding,Low,Resolved,2025-04-27 00:00:00,2025-05-09 00:00:00
+165,Carol Williams,Finance,Software Installation,Microsoft Office 365 not installed on new laptop,Low,Resolved,2025-08-16 00:00:00,2025-08-19 00:00:00
+166,Wendy Walker,Finance,Password Reset,Account locked after multiple failed login attempts,Low,In Progress,2025-05-31 00:00:00,
+167,Liam White,HR,Software Installation,Python development environment setup required,Low,Resolved,2025-12-16 00:00:00,2025-12-29 00:00:00
+168,Frank Wilson,Sales,Password Reset,SSO password sync issue after domain change,Low,Closed,2025-12-16 00:00:00,2025-12-20 00:00:00
+169,Peter Garcia,Sales,Hardware Request,USB-C docking station required for laptop,Low,Resolved,2025-08-24 00:00:00,2025-08-29 00:00:00
+170,Victor Lee,HR,VPN Issue,Unable to access internal resources through VPN,High,Closed,2025-03-22 00:00:00,2025-03-24 00:00:00
+171,Olivia Thompson,Marketing,Hardware Request,Headset required for customer service calls,Critical,In Progress,2025-12-20 00:00:00,
+172,Isabella Anderson,Customer Service,Software Installation,AutoCAD license needed for design work,Medium,Closed,2025-02-24 00:00:00,2025-02-28 00:00:00
+173,Mia Harris,Finance,Laptop Issue,Keyboard keys intermittently not responding,Medium,Closed,2025-01-12 00:00:00,2025-01-26 00:00:00
+174,Victor Lee,HR,Software Installation,Microsoft Office 365 not installed on new laptop,Low,Closed,2026-04-12 00:00:00,2026-04-22 00:00:00
+175,Xavier Hall,Operations,Software Installation,Need Adobe Acrobat Reader for PDF forms,Critical,In Progress,2025-11-07 00:00:00,
+176,Zachary Young,Sales,Software Installation,Need Adobe Acrobat Reader for PDF forms,Medium,Resolved,2025-11-18 00:00:00,2025-11-20 00:00:00
+177,Cathy Wright,Customer Service,Email Access,Cannot send emails to external recipients,Low,Closed,2025-10-24 00:00:00,2025-10-30 00:00:00
+178,Xavier Hall,Operations,VPN Issue,VPN client requires update to latest version,Critical,In Progress,2025-03-31 00:00:00,
+179,Grace Moore,Engineering,VPN Issue,Unable to access internal resources through VPN,Medium,Closed,2025-09-14 00:00:00,2025-09-19 00:00:00
+180,Amy Hernandez,Engineering,Password Reset,Password expired and self-service reset not working,Critical,Closed,2026-01-18 00:00:00,2026-02-01 00:00:00
+181,Karen Jackson,IT,Network Connectivity,Internet connection very slow at workstation,Medium,Open,2026-03-17 00:00:00,
+182,Victor Lee,HR,Email Access,Email signature not displaying correctly in Outlook,Critical,Closed,2025-07-07 00:00:00,2025-07-09 00:00:00
+183,Zachary Young,Sales,Software Installation,Request to install Slack desktop application,Low,Open,2025-12-11 00:00:00,
+184,Xavier Hall,Operations,Email Access,"Email storage quota exceeded, cannot receive mail",Medium,Closed,2025-02-25 00:00:00,2025-03-08 00:00:00
+185,Henry Taylor,Legal,Software Installation,Request to install Slack desktop application,Medium,Closed,2026-04-14 00:00:00,2026-04-24 00:00:00
+186,Henry Taylor,Legal,Email Access,"Email storage quota exceeded, cannot receive mail",Medium,Resolved,2025-11-29 00:00:00,2025-12-06 00:00:00
+187,David Brown,Operations,VPN Issue,VPN client requires update to latest version,Critical,In Progress,2025-03-01 00:00:00,
+188,David Brown,Operations,Password Reset,Password expired and self-service reset not working,Medium,In Progress,2025-12-10 00:00:00,
+189,Xavier Hall,Operations,Email Access,Outlook not syncing new messages since Monday,Medium,Resolved,2026-03-30 00:00:00,2026-04-06 00:00:00
+190,Uma Lewis,IT,VPN Issue,VPN credentials not accepted after password change,Medium,Resolved,2025-01-17 00:00:00,2025-01-29 00:00:00
+191,Liam White,HR,Password Reset,Password expired and self-service reset not working,Medium,In Progress,2025-02-20 00:00:00,
+192,Victor Lee,HR,Software Installation,Microsoft Office 365 not installed on new laptop,Critical,Resolved,2025-07-23 00:00:00,2025-07-28 00:00:00
+193,Grace Moore,Engineering,Other,Software license transfer from departing employee,Critical,Closed,2025-12-06 00:00:00,2025-12-10 00:00:00
+194,Uma Lewis,IT,Email Access,"Email storage quota exceeded, cannot receive mail",Critical,Open,2025-05-05 00:00:00,
+195,Emma Davis,Marketing,Network Connectivity,Intermittent connection drops affecting video calls,Low,Closed,2025-04-17 00:00:00,2025-04-27 00:00:00
+196,Grace Moore,Engineering,Network Connectivity,Intermittent connection drops affecting video calls,Low,Closed,2025-01-02 00:00:00,2025-01-07 00:00:00
+197,Brian King,Legal,Other,General IT policy question about BYOD,Critical,Resolved,2025-02-26 00:00:00,2025-03-09 00:00:00
+198,Brian King,Legal,VPN Issue,VPN client disconnects every 30 minutes,Low,Closed,2025-10-29 00:00:00,2025-11-04 00:00:00
+199,Alice Johnson,IT,Password Reset,SSO password sync issue after domain change,Low,Closed,2025-02-28 00:00:00,2025-03-12 00:00:00
+200,Carol Williams,Finance,Software Installation,Microsoft Office 365 not installed on new laptop,High,Resolved,2025-08-20 00:00:00,2025-08-29 00:00:00
+201,Henry Taylor,Legal,Hardware Request,Ergonomic mouse requested due to wrist strain,Low,Closed,2025-06-04 00:00:00,2025-06-12 00:00:00
+202,Uma Lewis,IT,Other,Backup job not completing successfully overnight,Low,Resolved,2025-08-07 00:00:00,2025-08-18 00:00:00
+203,David Brown,Operations,Software Installation,Microsoft Office 365 not installed on new laptop,Critical,Open,2025-06-14 00:00:00,
+204,Tina Rodriguez,Management,VPN Issue,Unable to access internal resources through VPN,Low,Resolved,2025-10-08 00:00:00,2025-10-20 00:00:00
+205,Karen Jackson,IT,Software Installation,Python development environment setup required,Medium,In Progress,2025-11-06 00:00:00,
+206,Noah Martin,Operations,VPN Issue,Unable to access internal resources through VPN,High,Closed,2026-01-05 00:00:00,2026-01-19 00:00:00
+207,Grace Moore,Engineering,Software Installation,AutoCAD license needed for design work,High,Resolved,2025-07-24 00:00:00,2025-07-31 00:00:00
+208,Xavier Hall,Operations,VPN Issue,VPN credentials not accepted after password change,Medium,Resolved,2026-05-04 00:00:00,2026-05-07 00:00:00
+209,Victor Lee,HR,Hardware Request,Request for external 27-inch monitor for dual setup,Low,Closed,2025-08-10 00:00:00,2025-08-12 00:00:00
+210,Xavier Hall,Operations,Email Access,Email signature not displaying correctly in Outlook,High,Resolved,2026-05-05 00:00:00,2026-05-14 00:00:00
+211,Rachel Robinson,Legal,Password Reset,New employee needs initial password configured,Low,In Progress,2026-03-21 00:00:00,
+212,Derek Scott,Management,Email Access,"Email storage quota exceeded, cannot receive mail",Critical,Resolved,2025-02-23 00:00:00,2025-03-05 00:00:00
+213,Quinn Martinez,Engineering,Password Reset,Account locked after multiple failed login attempts,Medium,In Progress,2025-06-29 00:00:00,
+214,Brian King,Legal,Laptop Issue,Screen flickering and display artifacts present,Low,In Progress,2026-02-18 00:00:00,
+215,Noah Martin,Operations,Network Connectivity,Intermittent connection drops affecting video calls,Critical,Closed,2025-12-12 00:00:00,2025-12-23 00:00:00
+216,Rachel Robinson,Legal,VPN Issue,VPN credentials not accepted after password change,Critical,Closed,2025-01-15 00:00:00,2025-01-18 00:00:00
+217,Isabella Anderson,Customer Service,Email Access,Cannot send emails to external recipients,Medium,In Progress,2025-04-03 00:00:00,
+218,Brian King,Legal,VPN Issue,Cannot connect to VPN from home office,Medium,Open,2025-02-16 00:00:00,
+219,Xavier Hall,Operations,Laptop Issue,Screen flickering and display artifacts present,Medium,Resolved,2025-07-09 00:00:00,2025-07-14 00:00:00
+220,Xavier Hall,Operations,Password Reset,Account locked after multiple failed login attempts,Critical,Resolved,2025-03-21 00:00:00,2025-03-24 00:00:00
+1,Uma Lewis,IT,VPN Issue,VPN client disconnects every 30 minutes,High,In Progress,2026-01-13 00:00:00,
+2,David Brown,Operations,Email Access,Distribution list access required for project team,High,Open,2025-01-17 00:00:00,
+3,Alice Johnson,IT,VPN Issue,Unable to access internal resources through VPN,Low,Resolved,2025-04-12 00:00:00,2025-04-24 00:00:00
+4,Uma Lewis,IT,Email Access,"Email storage quota exceeded, cannot receive mail",Medium,Resolved,2026-02-19 00:00:00,2026-03-05 00:00:00
+5,Alice Johnson,IT,Network Connectivity,Shared network drive not accessible from remote,Low,Resolved,2025-03-21 00:00:00,2025-03-25 00:00:00
+6,Yara Allen,Marketing,Password Reset,Password expired and self-service reset not working,Low,Open,2025-11-06 00:00:00,
+7,Isabella Anderson,Customer Service,Network Connectivity,Network printer not discovered on local network,High,Resolved,2025-02-10 00:00:00,2025-02-19 00:00:00
+8,James Thomas,Management,Network Connectivity,Intermittent connection drops affecting video calls,Medium,Closed,2025-04-09 00:00:00,2025-04-21 00:00:00
+9,Carol Williams,Finance,VPN Issue,Cannot connect to VPN from home office,Low,In Progress,2026-03-14 00:00:00,
+10,Henry Taylor,Legal,Network Connectivity,Shared network drive not accessible from remote,Medium,Resolved,2025-03-25 00:00:00,2025-03-31 00:00:00

@@ -5,12 +5,19 @@ import {
   Ticket,
   HeadphonesIcon,
   ChevronRight,
+  BarChart2,
+  Database,
 } from 'lucide-react'
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { to: '/create', icon: PlusCircle, label: 'New Ticket', end: false },
   { to: '/tickets', icon: Ticket, label: 'All Tickets', end: false },
+]
+
+const analyticsItems = [
+  { to: '/analytics', icon: BarChart2, label: 'Analytics', end: false },
+  { to: '/etl', icon: Database, label: 'ETL Manager', end: false },
 ]
 
 export default function Sidebar() {
@@ -35,6 +42,32 @@ export default function Sidebar() {
           Navigation
         </p>
         {navItems.map(({ to, icon: Icon, label, end }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={end}
+            className={({ isActive }) =>
+              `group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+                isActive
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <Icon size={17} />
+                <span className="flex-1">{label}</span>
+                {isActive && <ChevronRight size={13} className="opacity-70" />}
+              </>
+            )}
+          </NavLink>
+        ))}
+
+        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest px-3 pb-2 pt-5">
+          Analytics
+        </p>
+        {analyticsItems.map(({ to, icon: Icon, label, end }) => (
           <NavLink
             key={to}
             to={to}

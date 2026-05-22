@@ -5,6 +5,8 @@ import Dashboard from './pages/Dashboard'
 import CreateTicket from './pages/CreateTicket'
 import TicketList from './pages/TicketList'
 import TicketDetail from './pages/TicketDetail'
+import Analytics from './pages/Analytics'
+import EtlManager from './pages/EtlManager'
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
             <Route path="/create" element={<CreateTicket />} />
             <Route path="/tickets" element={<TicketList />} />
             <Route path="/tickets/:id" element={<TicketDetail />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/etl" element={<EtlManager />} />
           </Routes>
         </main>
       </div>

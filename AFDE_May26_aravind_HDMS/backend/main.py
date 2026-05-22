@@ -7,13 +7,15 @@ import models
 import crud
 from schemas import TicketResponse
 from routers.tickets import router as tickets_router
+from routers.analytics import router as analytics_router
+from routers.etl import router as etl_router
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Helpdesk Ticket Management System",
-    description="REST API for managing IT support tickets",
-    version="1.0.0",
+    description="REST API for managing IT support tickets with ETL analytics",
+    version="2.0.0",
 )
 
 app.add_middleware(
@@ -29,11 +31,13 @@ app.add_middleware(
 )
 
 app.include_router(tickets_router)
+app.include_router(analytics_router)
+app.include_router(etl_router)
 
 
 @app.get("/")
 def root():
-    return {"message": "Helpdesk Ticket Management System API", "version": "1.0.0"}
+    return {"message": "Helpdesk Ticket Management System API", "version": "2.0.0"}
 
 
 @app.get("/health")
