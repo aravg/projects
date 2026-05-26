@@ -277,6 +277,40 @@ python etl/etl_pipeline.py
 
 ---
 
+## Screenshots
+
+### Login Page
+![Login Page](screenshots/login-page.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### Supervisor Dashboard
+![Supervisor Dashboard](screenshots/supervisor-dashboard.png)
+
+### All Complaints List
+![Complaints List](screenshots/complaints-list.png)
+
+### Register New Complaint
+![New Complaint Form](screenshots/new-complaint-form.png)
+
+### Reports & Analytics
+![Reports and Analytics](screenshots/reports-analytics.png)
+
+### Swagger API Documentation
+![Swagger API Docs](screenshots/swagger-api-docs.png)
+
+### Swagger API Schemas
+![Swagger API Schemas](screenshots/swagger-api-schemas.png)
+
+### ETL Analytics Dashboard (Phase 2)
+![ETL Analytics Dashboard](screenshots/etl-analytics-dashboard.png)
+
+### ETL Management Pipeline (Phase 2)
+![ETL Management Pipeline](screenshots/etl-management-pipeline.png)
+
+---
+
 ## Demo Credentials
 
 | Role | Email | Password |

@@ -214,6 +214,22 @@ SQLite database file `feedback.db` is auto-created inside `backend/` on first ru
 
 ---
 
+## Screenshots
+
+### Dashboard
+![Dashboard](screenshots/Dashboard.png)
+
+### Feedback Management
+![Feedback Management](screenshots/feedback.png)
+
+### API Testing
+![API Testing](screenshots/api_testing.png)
+
+### ETL Pipeline
+![ETL Pipeline](screenshots/ETL.png)
+
+---
+
 ## GitHub Repository Naming
 
 Follows the convention:

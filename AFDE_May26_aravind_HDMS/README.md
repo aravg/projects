@@ -35,6 +35,25 @@ Organizations rely on IT support teams to resolve employee issues like VPN failu
 
 ---
 
+## Screenshots
+
+### Dashboard — Stats Overview & Recent Tickets
+![Dashboard](screenshots/dashboard.png)
+
+### Create New Ticket — Submission Form
+![Create New Ticket](screenshots/create.png)
+
+### All Tickets — Searchable & Filterable Listing
+![All Tickets](screenshots/tickets.png)
+
+### Analytics — ETL-Powered Charts & Insights
+![Analytics](screenshots/analytics.png)
+
+### ETL Manager — Pipeline Runner & Stage Overview
+![ETL Manager](screenshots/etl-manager.png)
+
+---
+
 ## Technology Stack
 
 | Layer        | Technology                    |

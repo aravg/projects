@@ -86,6 +86,25 @@ Frontend runs on **http://localhost:5173**
 
 ---
 
+## Screenshots
+
+### Employee Dashboard
+![Employee Dashboard](screeshots/dashboard.png)
+
+### Articles List
+![Articles List](screeshots/articles-list.png)
+
+### Categories
+![Categories](screeshots/categories.png)
+
+### Search Knowledge Base
+![Search](screeshots/search.png)
+
+### ETL Management
+![ETL Management](screeshots/ETL.png)
+
+---
+
 ## ETL Pipeline (Phase 2)
 
 ### Workflow
@@ -243,20 +262,13 @@ AFDE_May26_aravind_EKBMS/
 
 ## Screenshots
 
-> Add screenshots to the `/screenshots` folder.
-
-Recommended screenshots:
-- Login page
-- Dashboard
-- Articles list
-- Article detail
-- Create article form
-- Approval queue
-- Search results
-- Reports — Overview tab
-- Reports — Author Activity tab *(Phase 2)*
-- ETL Management — Run History *(Phase 2)*
-- ETL pipeline execution output *(Phase 2)*
+| Screen | Preview |
+|--------|---------|
+| Dashboard | ![Dashboard](screeshots/dashboard.png) |
+| Articles List | ![Articles List](screeshots/articles-list.png) |
+| Categories | ![Categories](screeshots/categories.png) |
+| Search | ![Search](screeshots/search.png) |
+| ETL Management | ![ETL Management](screeshots/ETL.png) |
 
 ---
 
